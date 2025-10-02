@@ -1,0 +1,47 @@
+﻿@model Course
+
+<div class="card course-card overflow-hidden h-100">
+    <div class="img">
+        <a asp-action="CourseDetails" asp-controller="Store" asp-route-id="@Model.Id">
+            <img src="@(Model.ImageUrl ?? "/images/default-placeholder.png")" class="w-100" alt="@Model.Name" style="object-fit: cover;">
+        </a>
+    </div>
+    <div class="content p-3 d-flex flex-column">
+        <div class="d-flex justify-content-between">
+            <span class="badge bg-success badge-custom-1">@(Model.IsOnline ? "Online" : "Offline")</span>
+            <span class="badge bg-warning text-dark badge-custom">@Model.Category.Name</span>
+        </div>
+        <h5 class="mt-4">
+            <a asp-action="CourseDetails" asp-controller="Store" asp-route-id="@Model.Id" class="text-decoration-none text-dark">@Model.Name</a>
+        </h5>
+        <div class="mb-2">
+            <partial name="_StarRatingPartial" model="Model.AverageRating" />
+            <span class="text-muted small ms-1">(@Model.RatingCount)</span>
+        </div>
+        <p class="text-muted">@Model.Description.Substring(0, Math.Min(Model.Description.Length, 100))...</p>
+        <div class="d-flex justify-content-between mt-auto">
+            <small class="person"><i class="fa-solid fa-user me-2"></i> @Model.InstructorName</small>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            @if (Model.SalePrice.HasValue)
+            {
+                <span class="course-price fw-bold">@Model.SalePrice.Value.ToString("C")</span>
+                <span class="text-muted text-decoration-line-through">@Model.Price.ToString("C")</span>
+            }
+            else
+            {
+                <span class="course-price fw-bold">@Model.Price.ToString("C")</span>
+            }
+            <form asp-controller="Profile" asp-action="AddToFavorites" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="courseId" value="@Model.Id" />
+                <button type="submit" class="btn btn-link text-danger p-0" title="Add to Favorites"><i class="fas fa-heart"></i></button>
+            </form>
+        </div>
+        <div class="card-footer bg-transparent mt-2 p-0 border-0 d-flex gap-2">
+            <a asp-action="CourseDetails" asp-controller="Store" asp-route-id="@Model.Id" class="btn btn-outline-primary w-50">Details</a>
+            <a asp-controller="Store" asp-action="Course" asp-route-id="@Model.Id" class="btn btn-accent w-50">Enroll</a>
+        </div>
+    </div>
+</div>
+

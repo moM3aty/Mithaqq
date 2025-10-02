@@ -1,0 +1,741 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<header class="header" id="home">
+    <div class="hero d-flex align-items-center text-white">
+        <div class="container">
+            <div class="row g-4 align-items-center justify-content-center justify-content-lg-start" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-10">
+                    <div class="content">
+                        <span class="badge header-badge rounded-pill px-3 py-2 mb-3">Permenant Trust</span>
+                        <h1 class="display-4 fw-bold">
+                            <em>Mithaqq Business Development</em><br>
+                            <em>Holding Company</em>
+                        </h1>
+                        <p class="lead mt-3 mb-4">
+                            Leading the future through specialized business solutions in training, e-marketing, technical innovation, and travel services.
+                        </p>
+                        <a href="#companies" class="btn btn-lg btn-primary px-4"><i class="fas fa-rocket me-2"></i>Explore Companies</a>
+
+                        <div class="partner-logos mt-5 d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                            <a asp-controller="Home" asp-action="EasyWay" class="logo-img"><img src="~/images/logo-1.jpg" class="me-4 rounded-2 mb-3" alt="Easy Way" height="100"></a>
+                            <a asp-controller="Home" asp-action="Global" class="logo-img"><img src="~/images/logo-2.jpg" class="me-4 rounded-2 mb-3" alt="Global" height="100"></a>
+                            <a asp-controller="Home" asp-action="Nile" class="logo-img"><img src="~/images/logo-3.jpg" class="me-4 rounded-2 mb-3" alt="Nile" height="100"></a>
+                            <a asp-controller="Store" asp-action="Index" class="logo-img"><img src="~/images/logo-4.jpg" class="me-4 rounded-2 mb-3" alt="Nile Store" height="100"></a>
+                            <a asp-controller="Home" asp-action="Innovation" class="logo-img"><img src="~/images/logo-5.jpg" class="me-4 rounded-2 mb-3" alt="Innovation" height="100"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <path opacity="0.33" fill="#ffffff" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7
+    c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z" />
+            <path opacity="0.66" fill="#ffffff" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1
+    s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z" />
+            <path fill="#ffffff" d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5
+    C28.6,63.7,0,0,0,0h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z" />
+        </svg>
+    </div>
+</header>
+
+<main>
+    <section class="about py-5" id="about">
+        <div class="container py-5">
+            <div class="row g-4 justify-content-center align-items-center">
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="box">
+                        <div class="text-center">
+                            <h2 class="mb-4 text-center">About Mithaqq </h2>
+                        </div>
+                        <p class="text-muted">
+                            Mithaqq Business Development Holding Company was established in 2016 with a promising vision and strategic ideas to ensure individual and institutional success, based on specific standards, systems, and clear objectives for
+                            creating and building entrepreneurs in various fields and specialties, achieving intellectual, financial, and social success and achieving great leadership in the world of finance and business.
+                        </p>
+                        <div class="row g-4 mt-4 content-box justify-content-center align-items-center">
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                <div class="box">
+                                    <span>9</span>
+                                    <p>Years Experience</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                <div class="box">
+                                    <span>2000</span>
+                                    <p>Student</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                <div class="box">
+                                    <span>100%</span>
+                                    <p>Satisfied</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                <div class="box">
+                                    <span>50+</span>
+                                    <p>Projects Completed</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="img">
+                        <img src="~/images/about.jpg" class="img-fluid" alt="about">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4 justify-content-center align-items-center">
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="img rounded-1 overflow-hidden">
+                        <video src="~/images/main-video.mp4" controls autoplay muted loop playsinline class="rounded-2 shadow-sm w-100">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section class="features-section pt-5" id="values">
+        <div class="container-fluid px-0 pt-5">
+            <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                <h2 class="mb-4 text-center">Mithaqq Goals</h2>
+            </div>
+            <div class="row g-0" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-md-6 col-xl-4">
+                    <div class="feature-box" style="background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url('/images/vision.jpg');">
+                        <h3 class="small-text">Mithaqq Vision</h3>
+                        <div class="feature-inner">
+                            <div class="value-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <h3>Mithaqq Vision</h3>
+                            <p>
+                                To foster ever-expanding trust and limitless development through integrated growth and pioneering advancement, inspired by faith in God Almighty to empower every person to help others, elevate society, and build a future of compassion, responsibility,
+                                and enduring progress, while nurturing generations to lead with wisdom, integrity, and a shared commitment to the betterment of all humanity, and to create sustainable pathways of innovation that preserve our values
+                                while embracing the opportunities of an ever-changing world.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <div class="feature-box" style="background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url('/images/mission.jpg');">
+                        <h3 class="small-text">Mithaqq Mission</h3>
+                        <div class="feature-inner">
+                            <div class="value-icon">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <h3>Mithaqq Mission</h3>
+                            <p>
+                                To become the largest gathering of local and global entrepreneurs and create an economic powerhouse that integrates ethical values, scientific innovation, and practical solutions to achieve true economic inclusion and sustainable growth both locally and
+                                globally, while fostering a dynamic ecosystem of collaboration, creativity, and opportunity that empowers individuals and communities to thrive across generations, and championing transformative ideas that drive technological
+                                advancement, social responsibility, and lasting prosperity for all.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <div class="feature-box" style="background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url('/images/values.jpg');">
+                        <h3 class="small-text">Mithaqq Values</h3>
+                        <div class="feature-inner">
+                            <div class="value-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3>Mithaqq Values</h3>
+                            <p>
+                                We develop the individual, we build a society, and we revive a nation—empowering personal growth, fostering collective strength, and igniting the spirit of national renewal, while upholding integrity, innovation, and compassion as the guiding principles
+                                for a prosperous and united future, nurturing generations to embrace knowledge and creativity as tools for continuous progress, and inspiring collaboration across cultures to create a legacy of harmony, resilience,
+                                and shared success for all humanity.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light" id="companies">
+        <div class="store-animated-bar mb-5 my-5 py-2 overflow-hidden position-relative">
+            <div class="scrolling-track">
+                <span class="scrolling-text">
+                    <i class="fas fa-graduation-cap"></i> Mithaqq Global For Training
+                </span>
+                <span class="scrolling-text">
+                    <i class="fas fa-bullhorn"></i> Mithaqq Nile Electronic Marketing
+                </span>
+                <span class="scrolling-text">
+                    <i class="fas fa-cogs"></i> Mithaqq Technical Solutions
+                </span>
+                <span class="scrolling-text">
+                    <i class="fas fa-plane"></i> Mithaqq Easy Way for Travel
+                </span>
+                <span class="scrolling-text">
+                    <i class="fas fa-graduation-cap"></i> Mithaqq Global For Training
+                </span>
+                <span class="scrolling-text">
+                    <i class="fas fa-bullhorn"></i> Mithaqq Nile Electronic Marketing
+                </span>
+                <span class="scrolling-text">
+                    <i class="fas fa-cogs"></i> Mithaqq Technical Solutions
+                </span>
+                <span class="scrolling-text">
+                    <i class="fas fa-plane"></i> Mithaqq Easy Way for Travel
+                </span>
+            </div>
+        </div>
+        <div class="container py-2">
+            <div class="text-center mb-5" data-aos="fade-up" data-aos-delay="200">
+                <h2 class="display-4 fw-bold">Our Specialized Companies</h2>
+                <p class=" text-muted">Discover our diverse portfolio of business solutions</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <a asp-controller="Home" asp-action="Global" class="company-card h-100 d-block text-decoration-none">
+                        <div class="img">
+                            <img src="~/images/company1.jpg" class="w-100" alt="">
+                        </div>
+                        <div class="company-card-content">
+                            <h3>Mithaqq Global For Training</h3>
+                            <p class="text-muted">Training and Development</p>
+                            <p class="second-p">Mithaqq Global is a subsidiary of Mithaqq Business Development Holding Company. Mithaqq Global was established to achieve comprehensive quality standards by meeting training needs in all fields with high professionalism, innovation, and the development of strategic training plans and programs. This is to raise the efficiency of human resources, spread awareness, knowledge, and community culture, and create learning opportunities at the hands of top-level training experts.</p>
+                            <div class="company-features">
+                                <span class="badge me-2">Online Courses</span>
+                                <span class="badge me-2">Offline Training</span>
+                                <span class="badge">Certifications</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <a asp-controller="Home" asp-action="Nile" class="company-card h-100 d-block text-decoration-none">
+                        <div class="img">
+                            <img src="~/images/company2.jpg" class="w-100" alt="">
+                        </div>
+                        <div class="company-card-content">
+                            <h3>Mithaqq Nile Electronic Marketing</h3>
+                            <p class="text-muted">E-Marketing Solutions</p>
+                            <p class="second-p">Mithaqq Nile E-Marketing Company is a subsidiary of Mithaqq Business Development Company. It has focused on developing a comprehensive and clear vision for the business environment, directly reflecting the quality of the company's services and products, and its competitive position among other companies. This vision is achieved by providing greater marketing opportunities and offering products and services at prices acceptable to customers, while adhering to ethical, professional, and credible standards in marketing transactions.</p>
+                            <div class="company-features">
+                                <span class="badge me-2">Digital Marketing</span>
+                                <span class="badge me-2">E-Commerce</span>
+                                <span class="badge">Mithaqq Nile</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <a asp-controller="Home" asp-action="Innovation" class="company-card h-100 d-block text-decoration-none">
+                        <div class="img">
+                            <img src="~/images/company3.jpg" class="w-100" alt="">
+                        </div>
+                        <div class="company-card-content">
+                            <h3>Mithaqq technical solutions</h3>
+                            <p class="text-muted">Technical Solutions</p>
+                            <p class="second-p">It is a subsidiary of Mithaqq Business Development Holding Company, a leading company in the field of software and information systems across various business sectors. We aim to increase the efficiency and effectiveness of these sectors by innovating and developing various business systems, keeping pace with developments. We use the fastest and best innovative methods to enable owners of commercial, service, production, and research activities to operate with utmost ease. We thus play a significant role and have a clear impact on the success, development, and performance of the largest number of individuals, institutions, and companies. We aim to empower them to lead in their businesses, helping them preserve and grow their investments and achieve their goals.</p>
+                            <div class="company-features">
+                                <span class="badge me-2">Software Development</span>
+                                <span class="badge me-2">IT Consulting</span>
+                                <span class="badge">Tech Solutions</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-6 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <a asp-controller="Home" asp-action="EasyWay" class="company-card h-100 d-block text-decoration-none">
+                        <div class="img">
+                            <img src="~/images/company4.jpg" class="w-100" alt="">
+                        </div>
+                        <div class="company-card-content">
+                            <h3>Mithaqq Easy Way for Travel</h3>
+                            <p class="text-muted">Travel and Tourism</p>
+                            <p class="second-p">It is a proud subsidiary of Mithaqq Business Development Holding Company, dedicated to delivering exceptional travel solutions that combine reliability, affordability, and luxury. Through Yezi We Travel and Tourism, we provide all domestic and international ticket booking with the best prices and hotel booking services that guarantee a comfortable trip. Our offerings also include curated tourism packages, adventure experiences, and exclusive Hajj and Umrah programs. We prioritize excellence and personalized service to ensure every journey exceeds expectations, building trust with every client and embracing innovative solutions. Yezi We Travel and Tourism strives to create journeys that are convenient, enjoyable, and memorable for travelers across the globe.</p>
+                            <div class="company-features">
+                                <span class="badge me-2">Travel Booking</span>
+                                <span class="badge me-2">Tourism Packages</span>
+                                <span class="badge">Travel Consultation</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="news-section py-5">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title">Latest News & Insights</h2>
+                <p class="section-subtitle">Stay updated with the latest industry trends, company news, and expert insights.</p>
+            </div>
+
+            @if (Model.LatestPosts != null && Model.LatestPosts.Any())
+            {
+                var featuredPost = Model.LatestPosts.First();
+                <div class="row g-4 mb-5">
+                    <div class="col-12" data-aos="fade-up" data-aos-delay="200">
+                        <div class="featured-article">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6">
+                                    <img src="@featuredPost.ImageUrl" alt="Featured Article" class="img-fluid rounded-3">
+                                </div>
+                                <div class="col-lg-6 ps-lg-5 mt-4 mt-lg-0">
+                                    <span class="badge bg-pink mb-3">Featured Article</span>
+                                    <h3>@featuredPost.Title</h3>
+                                    <p class="article-excerpt">@featuredPost.Subtitle</p>
+                                    <div class="article-meta mb-3">
+                                        <span><i class="fas fa-calendar-alt"></i> @featuredPost.PublishDate.ToString("MMM dd, yyyy")</span>
+                                        <span class="ms-3"><i class="fas fa-clock"></i> 8 min read</span>
+                                    </div>
+                                    <a asp-controller="Home" asp-action="BlogDetail" asp-route-id="@featuredPost.Id" class="btn btn-primary">Read Full Article</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    @foreach (var post in Model.LatestPosts.Skip(1))
+                    {
+                        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                            <div class="news-card rounded-1">
+                                <img src="@post.ImageUrl" alt="News" class="card-img-top">
+                                <div class="card-body">
+                                    <span class="badge bg-pink mb-2">Company News</span>
+                                    <h5 class="card-title mt-2">@post.Title</h5>
+                                    <p class="card-text text-muted">@post.Subtitle</p>
+                                    <div class="card-meta">
+                                        <span><i class="fas fa-calendar-alt"></i> @post.PublishDate.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                    <div class="mt-3">
+                                        <a asp-controller="Home" asp-action="BlogDetail" asp-route-id="@post.Id" class="badge text-decoration-none">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-center">No recent blog posts to display.</p>
+            }
+        </div>
+    </section>
+
+    <section id="community" class="community-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <h2 class="section-title mb-2">Community & Events</h2>
+                    <p class="section-subtitle text-muted">Join our vibrant community and participate in exciting events that drive industry innovation.</p>
+                </div>
+            </div>
+
+            <ul class="nav nav-tabs event-tabs justify-content-center mb-5" id="eventTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button" role="tab">
+                        <i class="fas fa-calendar-plus"></i> Upcoming Events
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab">
+                        <i class="fas fa-history"></i> Past Events
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="gallery-tab" data-bs-toggle="tab" data-bs-target="#gallery" type="button" role="tab">
+                        <i class="fas fa-images"></i> Event Gallery
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="eventTabContent">
+                <div class="tab-pane fade show active" id="upcoming" role="tabpanel">
+                    <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="col-lg-6 mb-4">
+                            <div class="event-card upcoming-event">
+                                <div class="event-date">
+                                    <div class="date-box">
+                                        <span class="day">25</span>
+                                        <span class="month">DEC</span>
+                                    </div>
+                                </div>
+                                <div class="event-content">
+                                    <h4>Travel Marketing Summit 2024</h4>
+                                    <p><i class="fas fa-map-marker-alt"></i> Virtual Event</p>
+                                    <p class="event-description">Join industry leaders for insights on the future of travel marketing and digital transformation.</p>
+                                    <a href="https://wa.me/201276832619" target="_blank" class="btn btn-primary btn-sm">Register Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <div class="event-card upcoming-event">
+                                <div class="event-date">
+                                    <div class="date-box">
+                                        <span class="day">15</span>
+                                        <span class="month">JAN</span>
+                                    </div>
+                                </div>
+                                <div class="event-content">
+                                    <h4>Business Networking Mixer</h4>
+                                    <p><i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                                    <p class="event-description">Connect with fellow professionals in an exclusive networking event for business growth.</p>
+                                    <a href="https://wa.me/201276832619" target="_blank" class="btn btn-primary btn-sm">Register Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="past" role="tabpanel">
+                    <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="event-card past-event">
+                                <img src="https://images.pexels.com/photos/1181533/pexels-photo-1181533.jpeg" alt="Past Event" class="event-image">
+                                <div class="event-content">
+                                    <h5>Digital Marketing Conference</h5>
+                                    <p><i class="fas fa-calendar"></i> Nov 20, 2024</p>
+                                    <p class="event-description">Successful conference with 500+ attendees.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="event-card past-event">
+                                <img src="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg" alt="Past Event" class="event-image">
+                                <div class="event-content">
+                                    <h5>Travel Industry Awards</h5>
+                                    <p><i class="fas fa-calendar"></i> Oct 15, 2024</p>
+                                    <p class="event-description">Celebrating excellence in travel marketing.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="event-card past-event">
+                                <img src="https://images.pexels.com/photos/1181772/pexels-photo-1181772.jpeg" alt="Past Event" class="event-image">
+                                <div class="event-content">
+                                    <h5>Business Growth Workshop</h5>
+                                    <p><i class="fas fa-calendar"></i> Sep 30, 2024</p>
+                                    <p class="event-description">Interactive workshop on scaling businesses.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="gallery" role="tabpanel">
+                    <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="https://images.pexels.com/photos/1181316/pexels-photo-1181316.jpeg" alt="Gallery" class="img-fluid rounded-3">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg" alt="Gallery" class="img-fluid rounded-3">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg" alt="Gallery" class="img-fluid rounded-3">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="https://images.pexels.com/photos/1181412/pexels-photo-1181412.jpeg" alt="Gallery" class="img-fluid rounded-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="opportunities" class="opportunities-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <h2 class="section-title">Career Opportunities</h2>
+                    <p class="section-subtitle">Join our team of passionate professionals and shape the future of travel marketing.</p>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="opportunity-category">
+                        <div class="category-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3>Career Positions</h3>
+                        <p>Full-time opportunities for passionate professionals ready to make an impact.</p>
+                        <a href="#jobs" class="btn btn-primary">View Open Positions</a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="opportunity-category">
+                        <div class="category-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Commercial Partnerships</h3>
+                        <p>Strategic partnerships with agencies and organizations worldwide.</p>
+                        <a href="#partnerships" class="btn btn-primary">Partner With Us</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="jobs" class="job-listings">
+                <h3 class="mb-4">Open Positions</h3>
+                <div class="row g-4">
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="job-card">
+                            <div class="job-header">
+                                <h4>Senior Digital Marketing Manager</h4>
+                                <span class="job-type badge">Full-time</span>
+                            </div>
+                            <div class="job-details">
+                                <p><i class="fas fa-map-marker-alt"></i> New York, NY (Remote Available)</p>
+                                <p><i class="fas fa-dollar-sign"></i> $80,000 - $100,000</p>
+                                <p class="job-description">Lead digital marketing campaigns for travel and tourism clients. Develop strategies that drive engagement and conversions.</p>
+                            </div>
+                            <div class="job-requirements">
+                                <h6>Requirements:</h6>
+                                <ul>
+                                    <li>5+ years digital marketing experience</li>
+                                    <li>Travel industry background preferred</li>
+                                    <li>Strong analytical and creative skills</li>
+                                </ul>
+                            </div>
+                            <a href="https://wa.me/201276832619" target="_blank" class="btn btn-primary">Apply Now</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="job-card">
+                            <div class="job-header">
+                                <h4>Business Development Executive</h4>
+                                <span class="job-type badge">Full-time</span>
+                            </div>
+                            <div class="job-details">
+                                <p><i class="fas fa-map-marker-alt"></i> London, UK</p>
+                                <p><i class="fas fa-dollar-sign"></i> £45,000 - £60,000</p>
+                                <p class="job-description">Drive business growth through strategic partnerships and client relationship management in European markets.</p>
+                            </div>
+                            <div class="job-requirements">
+                                <h6>Requirements:</h6>
+                                <ul>
+                                    <li>3+ years sales/BD experience</li>
+                                    <li>European market knowledge</li>
+                                    <li>Excellent communication skills</li>
+                                </ul>
+                            </div>
+                            <a href="https://wa.me/201276832619" target="_blank" class="btn btn-primary">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="partnerships" class="partnership-section mt-5">
+                <h3 class="mb-4">Partnership Opportunities</h3>
+                <div class="row g-4">
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="partnership-card">
+                            <div class="partnership-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <h5>Global Agencies</h5>
+                            <p>Partner with us to expand your reach across international markets.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="partnership-card">
+                            <div class="partnership-icon">
+                                <i class="fas fa-plane"></i>
+                            </div>
+                            <h5>Travel Companies</h5>
+                            <p>Collaborate on innovative marketing campaigns for the travel industry.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="partnership-card">
+                            <div class="partnership-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h5>Technology Partners</h5>
+                            <p>Integrate cutting-edge solutions to enhance our service offerings.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="team" class="team-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <h2 class="section-title">Meet Our Team</h2>
+                    <p class="section-subtitle">Passionate professionals dedicated to delivering exceptional results for our clients.</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.pexels.com/photos/3184299/pexels-photo-3184299.jpeg" alt="Sarah Johnson" class="img-fluid">
+                            <div class="team-overlay">
+                                <div class="social-links">
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h4>Sarah Johnson</h4>
+                            <p class="team-role">CEO & Founder</p>
+                            <p class="team-description">Visionary leader with 15+ years in travel marketing, driving innovation and growth.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg" alt="Michael Chen" class="img-fluid">
+                            <div class="team-overlay">
+                                <div class="social-links">
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h4>Michael Chen</h4>
+                            <p class="team-role">Head of Digital Strategy</p>
+                            <p class="team-description">Digital marketing expert specializing in data-driven campaigns and ROI optimization.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg" alt="Emily Rodriguez" class="img-fluid">
+                            <div class="team-overlay">
+                                <div class="social-links">
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="#"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <h4>Emily Rodriguez</h4>
+                            <p class="team-role">Creative Director</p>
+                            <p class="team-description">Award-winning creative professional crafting compelling brand experiences.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-5 bg-light contact" id="contact">
+        <div class="container">
+            <div class="row g-4 justify-content-center align-items-center">
+                <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h2 class="fw-bold contact-title">Send Us a Message</h2>
+                                <p class="text-muted">We'll get back to you within 24 hours</p>
+                            </div>
+
+                            <form id="contactForm" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName" class="form-label">First Name *</label>
+                                        <input type="text" class="form-control" id="firstName" required>
+                                        <div class="invalid-feedback">Please provide your first name.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName" class="form-label">Last Name *</label>
+                                        <input type="text" class="form-control" id="lastName" required>
+                                        <div class="invalid-feedback">Please provide your last name.</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email" class="form-label">Email Address *</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                        <div class="invalid-feedback">Please provide a valid email address.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="phone" class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" id="phone">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="company" class="form-label">Company/Organization</label>
+                                        <input type="text" class="form-control" id="company">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="department" class="form-label">Department of Interest</label>
+                                        <select class="form-select" id="department">
+                                            <option value="">Select Department</option>
+                                            <option value="global">Mithaq Global - Training</option>
+                                            <option value="nile">Mithaq Nile - E-Marketing</option>
+                                            <option value="innovation">Mithaq Innovation - Tech Solutions</option>
+                                            <option value="easyway">Mithaq Easy Way - Travel</option>
+                                            <option value="general">General Inquiry</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject *</label>
+                                    <input type="text" class="form-control" id="subject" required>
+                                    <div class="invalid-feedback">Please provide a subject for your message.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message *</label>
+                                    <textarea class="form-control" id="message" rows="5" required></textarea>
+                                    <div class="invalid-feedback">Please provide your message.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="priority" class="form-label">Priority Level</label>
+                                    <select class="form-select" id="priority">
+                                        <option value="normal">Normal</option>
+                                        <option value="high">High</option>
+                                        <option value="urgent">Urgent</option>
+                                    </select>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-accent contact-btn btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+

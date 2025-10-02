@@ -1,0 +1,56 @@
+﻿@model BlogPost
+@{
+    ViewData["Title"] = Model.Title;
+}
+<link rel="stylesheet" href="~/css/article.css" asp-append-version="true">
+
+<header class="header" id="home">
+    <!-- A generic header can be placed here if needed, or it can be removed if the article header is sufficient -->
+</header>
+
+<section class="article-header">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-8">
+                <div class="article-meta-header">
+                    <span class="badge bg-primary mb-3">Featured Article</span>
+                    <h1 class="article-title">@Model.Title</h1>
+                    <p class="article-subtitle">@Model.Subtitle</p>
+
+                    <div class="article-author-info">
+                        <div class="d-flex align-items-center">
+                            <img src="@Model.AuthorImageUrl" alt="@Model.AuthorName" class="author-avatar">
+                            <div class="author-details">
+                                <h6 class="author-name">@Model.AuthorName</h6>
+                                <p class="author-title">@Model.AuthorTitle</p>
+                            </div>
+                        </div>
+                        <div class="article-stats">
+                            <span><i class="fas fa-calendar-alt"></i> @Model.PublishDate.ToString("MMMM dd, yyyy")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="article-content">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                <div class="article-body">
+                    <div class="article-featured-image">
+                        <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid rounded-3">
+                    </div>
+                    <div class="article-text">
+                        @Html.Raw(Model.Content)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center mt-5">
+            <a class="btn btn-accent btn-lg" asp-action="Index" asp-controller="Home">Back To Home</a>
+        </div>
+    </div>
+</section>

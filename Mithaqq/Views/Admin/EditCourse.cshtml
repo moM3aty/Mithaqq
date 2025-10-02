@@ -1,0 +1,188 @@
+﻿@model EditCourseViewModel
+@{
+    ViewData["Title"] = "Edit Course";
+    Layout = "_AdminLayout";
+}
+
+<h1 class="display-4 fw-bold mb-4">Edit: @Model.Name</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="EditCourse" method="post" id="course-edit-form">
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Price"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="SalePrice"></label>
+                    <input asp-for="SalePrice" class="form-control" />
+                    <span asp-validation-for="SalePrice" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="InstructorName"></label>
+                <input asp-for="InstructorName" class="form-control" />
+                <span asp-validation-for="InstructorName" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CompanyId"></label>
+                    <select asp-for="CompanyId" asp-items="Model.AllCompanies" class="form-select"></select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CategoryId"></label>
+                    <select asp-for="CategoryId" asp-items="Model.AllCategories" class="form-select"></select>
+                </div>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" asp-for="IsOnline">
+                <label class="form-check-label" asp-for="IsOnline"></label>
+            </div>
+
+
+            <h4 class="mt-5 mb-3">Lessons</h4>
+            <div id="lessons-container">
+                @for (var i = 0; i < Model.Lessons.Count; i++)
+                {
+                    <div class="lesson-item-editor p-3 mb-3 border rounded" data-lesson-id="@Model.Lessons[i].Id">
+                        <input type="hidden" name="Lessons[@i].Id" value="@Model.Lessons[i].Id" />
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong>Lesson @(i + 1)</strong>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteLesson(this, @Model.Lessons[i].Id)">Delete Lesson</button>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="Lessons[@i].Title" class="form-control" value="@Model.Lessons[i].Title" />
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Bunny Library ID</label>
+                                <input type="number" name="Lessons[@i].BunnyLibraryId" class="form-control" value="@Model.Lessons[i].BunnyLibraryId" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Bunny Video ID</label>
+                                <input type="text" name="Lessons[@i].BunnyVideoId" class="form-control" value="@Model.Lessons[i].BunnyVideoId" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <button type="button" id="add-lesson-btn" class="btn btn-success mt-2"><i class="fas fa-plus me-2"></i>Add Lesson</button>
+
+
+            <hr class="my-4" />
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        document.getElementById('course-edit-form').addEventListener('submit', function(e) {
+            reindexLessons();
+        });
+
+        function reindexLessons() {
+            const container = document.getElementById('lessons-container');
+            const items = container.querySelectorAll('.lesson-item-editor');
+            items.forEach((item, index) => {
+                item.querySelectorAll('input, select, textarea').forEach(input => {
+                    if (input.name) {
+                        input.name = input.name.replace(/Lessons\[\d+\]/, `Lessons[${index}]`);
+                    }
+                });
+                const strongTag = item.querySelector('strong');
+                if (strongTag) {
+                    strongTag.textContent = `Lesson ${index + 1}`;
+                }
+            });
+        }
+
+        document.getElementById('add-lesson-btn').addEventListener('click', function() {
+            const container = document.getElementById('lessons-container');
+            const index = container.querySelectorAll('.lesson-item-editor').length;
+            const html = `
+                <div class="lesson-item-editor p-3 mb-3 border rounded" data-lesson-id="0">
+                     <input type="hidden" name="Lessons[${index}].Id" value="0" />
+                     <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong>New Lesson</strong>
+                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteLesson(this, 0)">Remove</button>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Title</label>
+                        <input name="Lessons[${index}].Title" class="form-control" />
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Bunny Library ID</label>
+                            <input type="number" name="Lessons[${index}].BunnyLibraryId" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Bunny Video ID</label>
+                            <input name="Lessons[${index}].BunnyVideoId" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+
+        function deleteLesson(button, lessonId) {
+            const lessonEditor = button.closest('.lesson-item-editor');
+
+            if (lessonId === 0) {
+                lessonEditor.remove();
+                reindexLessons();
+                return;
+            }
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will permanently delete the lesson!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/api/deletelesson/${lessonId}`, {
+                        method: 'POST',
+                        headers: {
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            lessonEditor.remove();
+                            reindexLessons();
+                            Swal.fire('Deleted!', 'The lesson has been deleted.', 'success');
+                        } else {
+                            Swal.fire('Error!', 'Could not delete the lesson.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire('Error!', 'An error occurred while deleting the lesson.', 'error');
+                    });
+                }
+            });
+        }
+    </script>
+}
+

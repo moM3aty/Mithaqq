@@ -1,0 +1,129 @@
+﻿@model CourseDetailViewModel
+@{
+    ViewData["Title"] = Model.Course.Name;
+}
+
+<section class="py-5" style="padding-top: 120px !important;">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="text-center">Course Information</h2>
+        </div>
+        <div class="row g-0 mt-5 shadow-sm bg-white">
+            <div class="col-md-6">
+                <div class="img overflow-hidden h-100">
+                    <img src="@(Model.Course.ImageUrl ?? "/images/default-placeholder.png")" class="w-100 h-100 object-fit-cover" alt="@Model.Course.Name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card course-card rounded-0 p-4 border-0 h-100">
+                    <h5 class="card-title">@Model.Course.Name</h5>
+                    <div class="d-flex justify-content-between my-3">
+                        <span class="badge @(Model.Course.IsOnline ? "bg-success" : "bg-info") badge-custom-1">@(Model.Course.IsOnline ? "Online" : "Offline")</span>
+                        <span class="badge bg-warning text-dark badge-custom">@Model.Course.Category.Name</span>
+                    </div>
+                    <p class="small text-secondary">@Model.Course.Description</p>
+                    <div class="mb-2">
+                        <partial name="_StarRatingPartial" model="Model.Course.AverageRating" />
+                        <span class="text-muted small ms-2">(@Model.Course.RatingCount Reviews)</span>
+                    </div>
+                    <div class="d-flex justify-content-between my-3">
+                        <small class="person"><i class="fa-solid fa-user me-2"></i> @Model.Course.InstructorName</small>
+                        <small class="weeks"><i class="far fa-clock"></i> 8 weeks</small>
+                    </div>
+
+                    @if (Model.Course.SalePrice.HasValue)
+                    {
+                        <h5 class="text-success d-inline">$@Model.Course.SalePrice.Value.ToString("F2")</h5>
+                        <span class="text-muted text-decoration-line-through">$@Model.Course.Price.ToString("F2")</span>
+                    }
+                    else
+                    {
+                        <h5 class="text-success d-inline">$@Model.Course.Price.ToString("F2")</h5>
+                    }
+
+                    <div class="card-footer bg-transparent pt-3 d-flex flex-column gap-2">
+                        <a asp-controller="Store" asp-action="Course" asp-route-id="@Model.Course.Id" class="btn btn-accent w-100">
+                            <i class="fas fa-play me-2"></i>Start / Enroll Now
+                        </a>
+                        <form asp-controller="Profile" asp-action="AddToFavorites" method="post" class="w-100">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="courseId" value="@Model.Course.Id" />
+                            <button type="submit" class="btn heart-btn w-100"><i class="fas fa-heart me-2"></i>Add to Favorites</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Reviews Section -->
+        <div class="mt-5 bg-white p-4 rounded shadow-sm">
+            <h4 class="mb-3">Student Reviews (@Model.Reviews.Count)</h4>
+
+            <!-- Review Submission Form -->
+            @if (Model.UserHasPurchased && !Model.UserHasReviewed)
+            {
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Write a Review</h5>
+                        <form id="review-form">
+                            <div class="mb-3">
+                                <label class="form-label">Your Rating</label>
+                                <div class="interactive-stars fs-4" style="cursor: pointer;">
+                                    <i class="far fa-star" data-value="1"></i>
+                                    <i class="far fa-star" data-value="2"></i>
+                                    <i class="far fa-star" data-value="3"></i>
+                                    <i class="far fa-star" data-value="4"></i>
+                                    <i class="far fa-star" data-value="5"></i>
+                                </div>
+                                <input type="hidden" id="star-rating-value" value="0" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="review-comment" class="form-label">Your Review</label>
+                                <textarea id="review-comment" class="form-control" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                        <div id="review-message" class="mt-3"></div>
+                    </div>
+                </div>
+            }
+            else if (Model.UserHasReviewed)
+            {
+                <div class="alert alert-info">You have already reviewed this course.</div>
+            }
+
+            <!-- Existing Reviews List -->
+            @if (Model.Reviews.Any())
+            {
+                foreach (var review in Model.Reviews)
+                {
+                    <div class="d-flex mb-4">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-user-circle fa-3x text-muted"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="fw-bold mb-1">@review.User.FirstName @review.User.LastName</h6>
+                            <partial name="_StarRatingPartial" model="(double)review.Stars" />
+                            <p class="mt-2">@review.Comment</p>
+                            <small class="text-muted">Posted on @review.DatePosted.ToShortDateString()</small>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No reviews yet. Be the first to review this course!</p>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/rating.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const courseData = { courseId: @Model.Course.Id };
+            initializeRatingForm(courseData);
+        });
+    </script>
+}
+

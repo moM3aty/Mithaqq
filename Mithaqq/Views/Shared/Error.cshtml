@@ -1,0 +1,18 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="container text-center py-5" style="padding-top: 120px !important;">
+    <h1 class="display-1 text-danger">Error</h1>
+    <h2 class="text-danger">An error occurred while processing your request.</h2>
+    <p class="lead">Something went wrong on our end. Please try again later.</p>
+
+    @if (Model.ShowRequestId)
+    {
+        <p>
+            <strong>Request ID:</strong> <code>@Model.RequestId</code>
+        </p>
+    }
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Go to Homepage</a>
+</div>

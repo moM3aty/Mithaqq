@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Manage Orders";
+    Layout = "_AdminLayout";
+}
+
+<h1 class="display-4 fw-bold mb-4">Order Management</h1>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+                            <td>@order.User.FirstName @order.User.LastName</td>
+                            <td>@order.OrderDate.ToString("g")</td>
+                            <td>@order.OrderTotal.ToString("C")</td>
+                            <td><span class="badge bg-info text-dark">@order.Status</span></td>
+                            <td>
+                                <form asp-action="UpdateOrderStatus" method="post">
+                                    <input type="hidden" name="orderId" value="@order.Id" />
+                                    <div class="input-group">
+                                        <select name="status" class="form-select">
+                                            <option value="Pending Payment" selected="@(order.Status == "Pending Payment")">Pending Payment</option>
+                                            <option value="Completed" selected="@(order.Status == "Completed")">Completed</option>
+                                            <option value="Shipped" selected="@(order.Status == "Shipped")">Shipped</option>
+                                            <option value="Cancelled" selected="@(order.Status == "Cancelled")">Cancelled</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

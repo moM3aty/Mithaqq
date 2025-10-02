@@ -1,0 +1,87 @@
+﻿@model CartViewModel
+@{
+    ViewData["Title"] = "Shopping Cart";
+    ViewData["BodyClass"] = "cart-page";
+}
+<header class="cart-main-header">
+    <div class="container">
+        <h3>Shopping Cart</h3>
+    </div>
+</header>
+<section class="py-5">
+    <div class="container cart-container">
+        @if (Model != null && Model.CartItems.Any())
+        {
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <h4>Your cart</h4>
+                    <p class="cart-header">@Model.CartItems.Sum(i => i.Quantity) items in Your cart</p>
+
+                    @foreach (var item in Model.CartItems)
+                    {
+                        var itemName = item.Product?.Name ?? item.Course?.Name ?? item.TravelPackage?.Name;
+                        var itemImage = item.Product?.ImageUrl ?? item.Course?.ImageUrl ?? item.TravelPackage?.ImageUrl;
+
+                        <div class="cart-item d-flex align-items-center" data-cartitemid="@item.Id">
+                            <img src="@(itemImage ?? "/images/default-placeholder.png")" class="me-3" alt="product" style="width: 100px; height: 100px; object-fit: cover;">
+                            <div class="flex-grow-1">
+                                <h6>@itemName</h6>
+                                <small>Price: @item.Price.ToString("C") / per item</small>
+                            </div>
+                            @if (item.ProductId != null)
+                            {
+                                <div>
+                                    <form asp-action="UpdateCart" asp-controller="Store" method="post" class="d-inline update-cart-form">
+                                        <input type="hidden" name="cartItemId" value="@item.Id" />
+                                        <div class="input-group input-group-sm me-3" style="width: 120px;">
+                                            <input type="number" name="quantity" class="form-control text-center qty-input" value="@item.Quantity" min="1">
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+                            <div class="me-3 item-total fw-bold">@((item.Price * item.Quantity).ToString("C"))</div>
+                            <form asp-action="RemoveFromCart" asp-controller="Store" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="cartItemId" value="@item.Id" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger btn-remove-item">&times;</button>
+                            </form>
+                        </div>
+                    }
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart-summary d-flex flex-column gap-3">
+                        <div class="d-flex justify-content-between"><span>@Model.CartItems.Sum(i => i.Quantity) items:</span><span>@Model.Subtotal.ToString("C")</span></div>
+                        <div class="d-flex justify-content-between"><span>Delivery cost:</span><span>@Model.DeliveryCost.ToString("C")</span></div>
+                        <div class="d-flex justify-content-between"><span>Tax:</span><span>@Model.Tax.ToString("C")</span></div>
+                        <div class="d-flex justify-content-between text-success"><span>Discount:</span><span>-@Model.Discount.ToString("C")</span></div>
+                        <hr>
+                        <div class="d-flex justify-content-between fw-bold"><span>Total:</span><span>@Model.Total.ToString("C")</span></div>
+                        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary mt-3">Checkout →</a>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <h2>Your Cart is Empty</h2>
+                <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
+                <a asp-controller="Store" asp-action="Index" class="btn btn-primary mt-3">Continue Shopping</a>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInputs = document.querySelectorAll('.qty-input');
+
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    this.closest('form').submit();
+                });
+            });
+        });
+    </script>
+}

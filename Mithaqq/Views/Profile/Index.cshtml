@@ -1,0 +1,163 @@
+﻿@model ProfileViewModel
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="container py-5" style="padding-top: 120px !important;">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card text-center mb-4">
+                <div class="card-body">
+                    <i class="fas fa-user-circle fa-5x text-muted mb-3"></i>
+                    <h5 class="card-title">@Model.User.FirstName @Model.User.LastName</h5>
+                    <p class="card-text text-muted">@Model.User.Email</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <button class="nav-link active text-start" data-bs-toggle="pill" data-bs-target="#account-details">
+                            <i class="fas fa-user-cog me-2"></i>Account Details
+                        </button>
+                        <button class="nav-link text-start" data-bs-toggle="pill" data-bs-target="#my-orders">
+                            <i class="fas fa-shopping-bag me-2"></i>My Orders
+                        </button>
+                        <button class="nav-link text-start" data-bs-toggle="pill" data-bs-target="#my-courses">
+                            <i class="fas fa-graduation-cap me-2"></i>My Courses
+                        </button>
+                        <a class="nav-link text-start" asp-action="MyReviews">
+                            <i class="fas fa-star me-2"></i>My Reviews
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            @if (TempData["ProfileSuccess"] != null)
+            {
+                <div class="alert alert-success">@TempData["ProfileSuccess"]</div>
+            }
+            @if (TempData["ProfileError"] != null)
+            {
+                <div class="alert alert-danger">@TempData["ProfileError"]</div>
+            }
+            @if (TempData["PasswordSuccess"] != null)
+            {
+                <div class="alert alert-success">@TempData["PasswordSuccess"]</div>
+            }
+            @if (TempData["PasswordError"] != null)
+            {
+                <div class="alert alert-danger">@TempData["PasswordError"]</div>
+            }
+
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="account-details" role="tabpanel">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>Edit Profile Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="EditProfile" method="post">
+                                @Html.AntiForgeryToken()
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label asp-for="EditProfileViewModel.FirstName" class="form-label"></label>
+                                        <input asp-for="EditProfileViewModel.FirstName" class="form-control" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="EditProfileViewModel.LastName" class="form-label"></label>
+                                        <input asp-for="EditProfileViewModel.LastName" class="form-control" />
+                                    </div>
+                                    <div class="col-12">
+                                        <label asp-for="EditProfileViewModel.Address" class="form-label"></label>
+                                        <input asp-for="EditProfileViewModel.Address" class="form-control" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Change Password</h5>
+                        </div>
+                        <div class="card-body">
+                            <form asp-action="ChangePassword" method="post">
+                                @Html.AntiForgeryToken()
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="mb-3">
+                                    <label asp-for="ChangePasswordViewModel.OldPassword" class="form-label"></label>
+                                    <input asp-for="ChangePasswordViewModel.OldPassword" class="form-control" />
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="ChangePasswordViewModel.NewPassword" class="form-label"></label>
+                                    <input asp-for="ChangePasswordViewModel.NewPassword" class="form-control" />
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="ChangePasswordViewModel.ConfirmPassword" class="form-label"></label>
+                                    <input asp-for="ChangePasswordViewModel.ConfirmPassword" class="form-control" />
+                                </div>
+                                <button type="submit" class="btn btn-primary">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="my-orders" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header"><h5>Order History</h5></div>
+                        <div class="card-body">
+                            @if (Model.Orders.Any())
+                            {
+                                @foreach (var order in Model.Orders)
+                                {
+                                    <div class="border p-3 mb-3 rounded">
+                                        <h6>Order #@order.Id - @order.OrderDate.ToShortDateString()</h6>
+                                        <p>Total: @order.OrderTotal.ToString("C") | Status: <span class="badge bg-info">@order.Status</span></p>
+                                        <ul>
+                                            @foreach (var detail in order.OrderDetails)
+                                            {
+                                                <li>@(detail.Product?.Name ?? detail.Course?.Name) (x@detail.Quantity)</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p>You haven't placed any orders yet.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="my-courses" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header"><h5>Enrolled & Approved Courses</h5></div>
+                        <div class="card-body">
+                            @if (Model.Courses.Any())
+                            {
+                                <div class="list-group">
+                                    @foreach (var course in Model.Courses)
+                                    {
+                                        <a asp-controller="Store" asp-action="Course" asp-route-id="@course.Id" class="list-group-item list-group-item-action">
+                                            @course.Name
+                                        </a>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <p>You are not enrolled in any approved courses yet. If you have recently purchased a course, please wait for admin approval.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

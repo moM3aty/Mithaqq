@@ -1,0 +1,52 @@
+﻿<div class="modal fade" id="blogModal" tabindex="-1" aria-labelledby="blogModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="blogModalLabel">Add/Edit Blog Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="blogForm" enctype="multipart/form-data">
+                    <input type="hidden" id="blogPostId" name="Id" />
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="blogTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="blogTitle" name="Title" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="blogSubtitle" class="form-label">Subtitle / Excerpt</label>
+                            <input type="text" class="form-control" id="blogSubtitle" name="Subtitle">
+                        </div>
+                        <div class="col-12">
+                            <label for="blogContent" class="form-label">Content (HTML is supported)</label>
+                            <textarea class="form-control" id="blogContent" name="Content" rows="10" required></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="blogAuthorName" class="form-label">Author Name</label>
+                            <input type="text" class="form-control" id="blogAuthorName" name="AuthorName">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="blogAuthorTitle" class="form-label">Author Title</label>
+                            <input type="text" class="form-control" id="blogAuthorTitle" name="AuthorTitle">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="blogImageFile" class="form-label">Main Image</label>
+                            <input type="file" class="form-control" id="blogImageFile" name="ImageFile" accept="image/*">
+                            <img id="blogImagePreview" src="#" alt="Main Image Preview" class="mt-2" style="display: none; max-height: 100px; border-radius: 8px;" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="authorImageFile" class="form-label">Author Image</label>
+                            <input type="file" class="form-control" id="authorImageFile" name="AuthorImageFile" accept="image/*">
+                            <img id="authorImagePreview" src="#" alt="Author Image Preview" class="mt-2" style="display: none; max-height: 100px; border-radius: 8px;" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveBlogPostBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+

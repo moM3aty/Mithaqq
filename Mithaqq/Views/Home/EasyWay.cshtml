@@ -1,0 +1,261 @@
+﻿@model CompanyStoreViewModel
+@{
+    ViewData["Title"] = Model.Company.Name;
+    ViewData["BodyClass"] = "easy-way";
+}
+
+<header class="header easy-way-header" id="home">
+    <div class="hero d-flex align-items-center text-white">
+        <div class="container">
+            <div class="row g-4 align-items-center justify-content-center justify-content-lg-start"
+                 data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-10">
+                    <div class="content">
+                        <span class="badge header-badge rounded-pill px-3 py-2 mb-3">Permanent Trust</span>
+                        <h1 class="display-4 fw-bold">
+                            <em>@Model.Company.Name For Travel</em><br>
+                        </h1>
+                        <p class="lead mt-3 mb-4">
+                            @Model.Company.Description
+                        </p>
+                        <a href="#popular-packages" class="btn btn-lg btn-primary px-4"><i class="fas fa-store me-2"></i>Explore Packages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <path opacity="0.33" fill="#ffffff" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z" />
+            <path opacity="0.66" fill="#ffffff" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z" />
+            <path fill="#ffffff" d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z" />
+        </svg>
+    </div>
+</header>
+<section class="about py-5" id="about">
+    <div class="container py-5">
+        <div class="row g-4 justify-content-center align-items-center">
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="box">
+                    <div class="text-center">
+                        <h2 class="mb-4 text-center">About Easy Way </h2>
+                    </div>
+                    <p class="text-muted">A subsidiary of Mithaqq Business Development Holding Company, we offer all domestic and international ticket booking services through Easy Way Travel and Tourism, at the best prices and with the highest quality facilitation services. We also offer hotel booking services to ensure a comfortable trip and a pleasant stay, as well as the best tourism, Hajj, and Umrah offers.</p>
+                </div>
+            </div>
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="img">
+                    <img src="~/images/easy-way.jpg" class="img-fluid" alt="about">
+                </div>
+            </div>
+        </div>
+        <div class="floating-icons" aria-hidden="true">
+            <i class="fa-solid fa-plane icon-1"></i>
+            <i class="fa-solid fa-hotel icon-2"></i>
+            <i class="fa-solid fa-map-marked-alt icon-3"></i>
+            <i class="fa-solid fa-umbrella-beach icon-4"></i>
+            <i class="fa-solid fa-route icon-5"></i>
+            <i class="fa-solid fa-suitcase-rolling icon-6"></i>
+            <i class="fa-solid fa-globe icon-7"></i>
+        </div>
+    </div>
+</section>
+<section class="features-section pt-5" id="values">
+    <div class="container-fluid px-0 pt-5">
+        <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="mb-4 text-center">Easy Way Goals</h2>
+        </div>
+        <div class="row g-0" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-md-6 col-xl-4">
+                <div class="feature-box"
+                     style="background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url('/images/vision.jpg');">
+                    <h3 class="small-text">Easy Way Vision</h3>
+                    <div class="feature-inner">
+                        <div class="value-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>Easy Way Vision</h3>
+                        <p>
+                            Our vision is to expand the use of all flight and hotel booking methods while providing
+                            high-end travel services at affordable prices.
+                            We aim to organize special tourism programs and exclusive offers both inside and outside
+                            Sudan,
+                            redefining the travel experience and changing the general outlook on tourism at the
+                            local and global level.
+                            Through innovation and exceptional service, we strive to make every journey more
+                            accessible, memorable, and inspiring.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="feature-box"
+                     style="background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url('/images/mission.jpg');">
+                    <h3 class="small-text">Easy Way Mission</h3>
+                    <div class="feature-inner">
+                        <div class="value-icon">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3>Easy Way Mission</h3>
+                        <p>
+                            To be the leading company in providing travel, tourism, Hajj, Umrah, and hotel
+                            accommodation services, locally and internationally, in a professional and distinguished
+                            manner that ensures the customer's service is facilitated and costs are reduced.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <div class="feature-box"
+                     style="background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)), url('/images/values.jpg');">
+                    <h3 class="small-text">Easy Way Values</h3>
+                    <div class="feature-inner">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Easy Way Values</h3>
+                        <p>
+                            Our values are built on speed of completion, accuracy of performance, and a guarantee of
+                            trust.
+                            We are committed to delivering every service with efficiency and precision, ensuring
+                            that each customer’s needs are met with the highest level of professionalism.
+                            Transparency and honesty guide every interaction, while a dedication to continuous
+                            improvement drives us to provide exceptional travel, tourism, and hospitality solutions
+                            that create lasting relationships with our clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="py-5 services">
+    <div class="container">
+        <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="mb-4 text-center">Easy Way Services</h2>
+        </div>
+        <div class="row g-4 mt-4">
+            <div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card easy-card p-0 text-center overflow-hidden h-100">
+                    <div class="img mb-3">
+                        <img src="~/images/easy-way-1.jpg" class="w-100" alt="Hajj and Umrah">
+                    </div>
+                    <div class="content p-3">
+                        <h5 class="fw-bold">Hajj and Umrah Services</h5>
+                        <p class="text-muted">
+                            We provide complete and well-organized Hajj and Umrah packages designed to make your
+                            spiritual journey comfortable, safe, and worry-free.
+                            Our team ensures every detail is handled with care, from travel arrangements to
+                            accommodation and on-ground assistance.
+                        </p>
+                        <ul class="list-unstyled text-center mt-4 text-muted">
+                            <li><span>✔</span> Flexible and tailored travel packages</li>
+                            <li><span>✔</span> Assistance with visa and documentation</li>
+                            <li><span>✔</span> High-quality accommodation and transport</li>
+                            <li><span>✔</span> Dedicated support throughout the journey</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card easy-card p-0 text-center overflow-hidden h-100">
+                    <div class="img mb-3">
+                        <img src="~/images/easy-way-2.jpg" class="w-100" alt="Flight Booking">
+                    </div>
+                    <div class="content p-3">
+                        <h5 class="fw-bold">Booking Flight Tickets Inside and Outside Sudan</h5>
+                        <p class="text-muted">
+                            We make booking flight tickets easy, fast, and stress-free by offering competitive
+                            prices and a wide range of airlines to choose from.
+                            Whether you’re traveling within Sudan or internationally, our team ensures smooth
+                            arrangements, secure payments, and reliable customer support.
+                        </p>
+                        <ul class="list-unstyled text-center mt-4 text-muted">
+                            <li><span>✔</span> Domestic and international ticket booking</li>
+                            <li><span>✔</span> Competitive pricing and flexible options</li>
+                            <li><span>✔</span> Secure and quick reservation process</li>
+                            <li><span>✔</span> 24/7 customer assistance and travel updates</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card easy-card p-0 text-center overflow-hidden h-100">
+                    <div class="img mb-3">
+                        <img src="~/images/easy-way-3.jpg" class="w-100" alt="Hotel Reservations">
+                    </div>
+                    <div class="content p-3">
+                        <h5 class="fw-bold">Hotel Reservations Inside and Outside Sudan</h5>
+                        <p class="text-muted">
+                            We provide seamless hotel booking services with a wide selection of accommodations to
+                            suit every budget and preference.
+                            Whether you need a luxury stay or a budget-friendly option, our team ensures secure
+                            reservations, competitive rates,
+                            and a hassle-free experience for both local and international destinations.
+                        </p>
+                        <ul class="list-unstyled text-center mt-4 text-muted">
+                            <li><span>✔</span> Domestic and international hotel bookings</li>
+                            <li><span>✔</span> Competitive rates and exclusive deals</li>
+                            <li><span>✔</span> Secure and quick reservation process</li>
+                            <li><span>✔</span> 24/7 customer assistance and travel support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card easy-card p-0 text-center overflow-hidden h-100">
+                    <div class="img mb-3">
+                        <img src="~/images/easy-way-4.jpg" class="w-100" alt="Tourism Programs">
+                    </div>
+                    <div class="content p-3">
+                        <h5 class="fw-bold">Organizing Tourism Programs Inside and Outside Sudan</h5>
+                        <p class="text-muted">
+                            We specialize in creating unique and memorable tourism experiences that highlight the
+                            beauty and culture of every destination.
+                            Whether you’re exploring the wonders of Sudan or traveling abroad, our team designs
+                            customized tours, exciting itineraries,
+                            and special offers to make every trip enjoyable, comfortable, and stress-free.
+                        </p>
+                        <ul class="list-unstyled text-center mt-4 text-muted">
+                            <li><span>✔</span> Domestic and international tour packages</li>
+                            <li><span>✔</span> Customized itineraries and group programs</li>
+                            <li><span>✔</span> Competitive pricing and exclusive deals</li>
+                            <li><span>✔</span> 24/7 assistance and travel guidance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="popular-packages" class="popular-packages py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up" data-aos-delay="200">
+            <h2 class="display-5 fw-bold">Popular Travel Packages</h2>
+            <p class="text-muted">Carefully curated travel experiences for unforgettable journeys</p>
+        </div>
+
+        <div class="row g-4">
+            @if (Model.TravelPackages != null && Model.TravelPackages.Any())
+            {
+                @foreach (var package in Model.TravelPackages)
+                {
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                        <partial name="_TravelPackageCard" model="package" />
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="text-center text-muted">No travel packages available at the moment.</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>

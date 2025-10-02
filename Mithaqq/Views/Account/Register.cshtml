@@ -1,0 +1,88 @@
+﻿@model Mithaqq.ViewModels.RegisterViewModel
+
+@{
+    Layout = "_AccountLayout";
+    ViewData["Title"] = "Register";
+    ViewData["BodyClass"] = "signup-body";
+}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4 justify-content-center align-items-center">
+            <div class="col-md-8">
+                <div class="signup-card shadow shadow-sm mt-5">
+                    <div class="heading text-center mb-4">
+                        <h2 class="title mb-4">Signup Page</h2>
+                        <p class="description text-white">
+                            Please enter your signup details to create your account
+                        </p>
+                    </div>
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <label asp-for="FirstName"></label>
+                                <input asp-for="FirstName" class="w-100" placeholder="Enter Your First Name">
+                                <span asp-validation-for="FirstName" class="error-msg text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="LastName"></label>
+                                <input asp-for="LastName" class="w-100" placeholder="Enter Your Last Name">
+                                <span asp-validation-for="LastName" class="error-msg text-danger"></span>
+                            </div>
+                            <div class="col-12">
+                                <div class="">
+                                    <label asp-for="Email"></label>
+                                    <input asp-for="Email" class="w-100" placeholder="Enter Your email">
+                                    <span asp-validation-for="Email" class="error-msg text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="password-field position-relative">
+                                    <label asp-for="Password"></label>
+                                    <input asp-for="Password" id="Password" class="w-100" placeholder="Enter Your Password">
+                                    <i class="fas fa-eye-slash toggle-password" data-input="Password"></i>
+                                </div>
+                                <span asp-validation-for="Password" class="error-msg text-danger"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="confirm-password-field position-relative">
+                                    <label asp-for="ConfirmPassword"></label>
+                                    <input asp-for="ConfirmPassword" id="ConfirmPassword" class="w-100" placeholder="Confirm Password">
+                                    <i class="fas fa-eye-slash toggle-password" data-input="ConfirmPassword"></i>
+                                </div>
+                                <span asp-validation-for="ConfirmPassword" class="error-msg text-danger"></span>
+                            </div>
+
+                            <!-- THIS IS WHERE THE CUSTOMER USES THE MARKETER'S CODE -->
+                            <div class="col-12">
+                                <label asp-for="ReferralCode"></label>
+                                <input asp-for="ReferralCode" class="w-100" placeholder="Enter referral code (optional)">
+                                <span asp-validation-for="ReferralCode" class="error-msg text-danger"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-signup w-100">Signup</button>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center mt-2 p-3">
+                                    <div>
+                                        <a class="create-account" asp-action="Login">Already have an account?</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

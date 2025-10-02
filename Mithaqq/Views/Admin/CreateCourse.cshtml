@@ -1,0 +1,86 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Create New Course";
+    Layout = "_AdminLayout";
+}
+
+<h1 class="display-4 fw-bold mb-4">Add a New Course</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="CreateCourse" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="InstructorName" class="form-label"></label>
+                    <input asp-for="InstructorName" class="form-control" />
+                    <span asp-validation-for="InstructorName" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Price" class="form-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="SalePrice" class="form-label"></label>
+                    <input asp-for="SalePrice" class="form-control" />
+                    <span asp-validation-for="SalePrice" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="CompanyId" class="form-label"></label>
+                    <select asp-for="CompanyId" class="form-select" asp-items="ViewBag.CompanyId"></select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="CategoryId" class="form-label"></label>
+                    <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId"></select>
+                </div>
+                <div class="col-12">
+                    <label asp-for="ImageUrl" class="form-label"></label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="IsOnline">
+                        <label class="form-check-label" asp-for="IsOnline"></label>
+                    </div>
+                </div>
+
+                <hr class="my-4" />
+
+                <h5 class="mb-3">Lessons (Using Bunny.net)</h5>
+                <!-- Dynamic lesson fields would be added here with JavaScript in a real app -->
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Lesson 1: Title</label>
+                        <input type="text" name="Lessons[0].Title" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Lesson 1: Bunny Library ID</label>
+                        <input type="number" name="Lessons[0].BunnyLibraryId" class="form-control" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Lesson 1: Bunny Video ID</label>
+                        <input type="text" name="Lessons[0].BunnyVideoId" class="form-control" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Create Course</button>
+                <a asp-action="Courses" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

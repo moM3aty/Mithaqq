@@ -1,0 +1,171 @@
+﻿@model ProductDetailViewModel
+@{
+    ViewData["Title"] = Model.Product.Name;
+}
+
+<section class="py-5" style="padding-top: 120px !important; background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <img src="@(Model.Product.ImageUrl ?? "/images/default-placeholder.png")" class="w-100 rounded" alt="@Model.Product.Name" style="max-height: 500px; object-fit: cover;">
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="ps-lg-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-primary">@Model.Product.Category.Name</span>
+                        <span class="badge bg-secondary">By: @Model.Product.Company.Name</span>
+                    </div>
+
+                    <h1 class="display-5 fw-bold">@Model.Product.Name</h1>
+
+                    <div class="d-flex align-items-center my-3">
+                        <partial name="_StarRatingPartial" model="Model.Product.AverageRating" />
+                        <span class="text-muted ms-2">(@Model.Product.RatingCount Reviews)</span>
+                    </div>
+
+                    <div class="mb-4">
+                        @if (Model.Product.SalePrice.HasValue && Model.Product.SalePrice < Model.Product.Price)
+                        {
+                            <span class="h2 text-success fw-bold me-2">@Model.Product.SalePrice.Value.ToString("C")</span>
+                            <span class="text-muted text-decoration-line-through me-3">@Model.Product.Price.ToString("C")</span>
+                            @if (Model.Product.DiscountPercentage.HasValue && Model.Product.DiscountPercentage > 0)
+                            {
+                                <span class="badge bg-danger">@Model.Product.DiscountPercentage% OFF</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="h2 text-success fw-bold">@Model.Product.Price.ToString("C")</span>
+                        }
+                    </div>
+
+                    <p class="text-muted mb-4">@Model.Product.Description.Substring(0, Math.Min(Model.Product.Description.Length, 150))...</p>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-warehouse me-2 text-primary"></i>
+                        @if (Model.Product.StockQuantity > 0)
+                        {
+                            <span class="fw-bold text-success">In Stock (@Model.Product.StockQuantity available)</span>
+                        }
+                        else
+                        {
+                            <span class="fw-bold text-danger">Out of Stock</span>
+                        }
+                    </div>
+
+                    <form asp-controller="Store" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="productId" value="@Model.Product.Id" />
+                        <div class="row g-2 align-items-center">
+                            <div class="col-md-4">
+                                <label for="quantity" class="form-label">Quantity:</label>
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary btn-minus" type="button">-</button>
+                                    <input type="number" name="quantity" class="form-control text-center qty-input" value="1" min="1" max="@Model.Product.StockQuantity">
+                                    <button class="btn btn-outline-secondary btn-plus" type="button">+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label d-none d-md-block">&nbsp;</label>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-accent btn-lg" disabled="@(Model.Product.StockQuantity <= 0)">
+                                        <i class="fas fa-cart-plus me-2"></i>Add To Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="d-grid mt-2">
+                        <form asp-controller="Profile" asp-action="AddToFavorites" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="productId" value="@Model.Product.Id" />
+                            <button type="submit" class="btn heart-btn w-100"><i class="fas fa-heart me-2"></i>Add to Favorites</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Full Description & Reviews -->
+        <div class="mt-5 bg-white p-4 rounded shadow-sm" data-aos="fade-up">
+            <h4 class="mb-3">Product Description</h4>
+            <p>@Model.Product.Description</p>
+            <hr class="my-4">
+
+            <h4 class="mb-3">Customer Reviews (@Model.Reviews.Count)</h4>
+
+            <!-- Review Submission Form -->
+            @if (Model.UserHasPurchased && !Model.UserHasReviewed)
+            {
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Write a Review</h5>
+                        <form id="review-form">
+                            <div class="mb-3">
+                                <label class="form-label">Your Rating</label>
+                                <div class="interactive-stars fs-4" style="cursor: pointer;">
+                                    <i class="far fa-star" data-value="1"></i>
+                                    <i class="far fa-star" data-value="2"></i>
+                                    <i class="far fa-star" data-value="3"></i>
+                                    <i class="far fa-star" data-value="4"></i>
+                                    <i class="far fa-star" data-value="5"></i>
+                                </div>
+                                <input type="hidden" id="star-rating-value" value="0" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="review-comment" class="form-label">Your Review</label>
+                                <textarea id="review-comment" class="form-control" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                        <div id="review-message" class="mt-3"></div>
+                    </div>
+                </div>
+            }
+            else if (Model.UserHasReviewed)
+            {
+                <div class="alert alert-info">You have already reviewed this product.</div>
+            }
+
+
+            <!-- Existing Reviews List -->
+            @if (Model.Reviews.Any())
+            {
+                foreach (var review in Model.Reviews)
+                {
+                    <div class="d-flex mb-4">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-user-circle fa-3x text-muted"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="fw-bold mb-1">@review.User.FirstName @review.User.LastName</h6>
+                            <partial name="_StarRatingPartial" model="(double)review.Stars" />
+                            <p class="mt-2">@review.Comment</p>
+                            <small class="text-muted">Posted on @review.DatePosted.ToShortDateString()</small>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No reviews yet. Be the first to review this product!</p>
+            }
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/product-details.js"></script>
+    <script src="~/js/rating.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productData = { productId: @Model.Product.Id };
+            initializeRatingForm(productData);
+        });
+    </script>
+}
+

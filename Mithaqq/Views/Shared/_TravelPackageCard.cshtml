@@ -1,0 +1,36 @@
+﻿@model TravelPackage
+
+<div class="card package-card border-0 shadow h-100">
+    <div class="position-relative">
+        <a asp-action="TravelPackageDetails" asp-controller="Store" asp-route-id="@Model.Id">
+            <img src="@(Model.ImageUrl ?? "/images/default-placeholder.png")" class="card-img-top" alt="@Model.Name" style="object-fit:cover;">
+        </a>
+        <span class="badge travel-badge position-absolute top-0 end-0 m-3">Popular</span>
+    </div>
+    <div class="card-body bg-dark text-white rounded-bottom">
+        <h5 class="fw-bold">@Model.Name</h5>
+        <p class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>@Model.Destination</p>
+        <p class="mb-3 small">
+            @Model.Description.Substring(0, Math.Min(Model.Description.Length, 100))...
+        </p>
+        <ul class="list-unstyled d-flex flex-column gap-3 mb-4">
+            <li><i class="fas fa-clock text-success me-2"></i>@Model.DurationDays Days</li>
+            @if (!string.IsNullOrEmpty(Model.Inclusions))
+            {
+                @foreach (var inclusion in Model.Inclusions.Split(',').Take(2))
+                {
+                    <li><i class="fas fa-check text-success me-2"></i>@inclusion.Trim()</li>
+                }
+            }
+        </ul>
+        <div class="price-box bg-secondary bg-opacity-25 text-center py-3 rounded mb-3">
+            <span class="h4 fw-bold text-success">@Model.Price.ToString("C")</span>
+            <span class="small text-white"> per person</span>
+        </div>
+        <form asp-controller="Store" asp-action="AddToCart" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="travelPackageId" value="@Model.Id" />
+            <button type="submit" class="btn btn-success w-100">Book Now</button>
+        </form>
+    </div>
+</div>

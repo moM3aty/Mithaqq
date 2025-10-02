@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Company Orders";
+    Layout = "_CompanyAdminLayout";
+}
+
+<h1 class="display-4 fw-bold mb-4">My Company's Orders</h1>
+
+<div class="card">
+    <div class="card-body">
+        <p class="text-muted">Showing orders that contain products or courses from your company.</p>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+                            <td>@order.User.FirstName @order.User.LastName</td>
+                            <td>@order.OrderDate.ToString("g")</td>
+                            <td>@order.OrderTotal.ToString("C")</td>
+                            <td><span class="badge bg-info text-dark">@order.Status</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

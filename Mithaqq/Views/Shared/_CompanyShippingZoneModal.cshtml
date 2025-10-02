@@ -1,0 +1,35 @@
+﻿@model ShippingZone
+
+<div class="modal fade" id="companyShippingZoneModal" tabindex="-1" aria-labelledby="shippingZoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shippingZoneModalLabel">Add/Edit Shipping Zone</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="companyShippingZoneForm">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="shippingZoneId" />
+                    <div class="mb-3">
+                        <label for="shippingZoneName" class="form-label">Zone Name</label>
+                        <input type="text" class="form-control" id="shippingZoneName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="shippingCity" class="form-label">City</label>
+                        <input type="text" class="form-control" id="shippingCity" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="shippingCost" class="form-label">Shipping Cost</label>
+                        <input type="number" class="form-control" id="shippingCost" step="0.01" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveShippingZoneBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,75 @@
+﻿@model Favorite
+
+@{
+    string itemType = Model.Product != null ? "Product" : "Course";
+    var itemObject = itemType == "Product" ? (object)Model.Product : (object)Model.Course;
+    var id = itemType == "Product" ? Model.Product.Id : Model.Course.Id;
+    var name = itemType == "Product" ? Model.Product.Name : Model.Course.Name;
+    var description = itemType == "Product" ? Model.Product.Description : Model.Course.Description;
+    var imageUrl = itemType == "Product" ? Model.Product.ImageUrl : Model.Course.ImageUrl;
+    var price = itemType == "Product" ? Model.Product.Price : Model.Course.Price;
+    var salePrice = itemType == "Product" ? Model.Product.SalePrice : Model.Course.SalePrice;
+    var categoryName = itemType == "Product" ? Model.Product.Category?.Name : Model.Course.Category?.Name;
+    var detailsAction = itemType == "Product" ? "ProductDetails" : "CourseDetails";
+}
+
+<div class="card course-card overflow-hidden h-100">
+    <div class="img">
+        <a asp-action="@detailsAction" asp-controller="Store" asp-route-id="@id">
+            <img src="@(imageUrl ?? "/images/default-placeholder.png")" class="w-100" alt="@name" style="object-fit: cover;">
+        </a>
+    </div>
+    <div class="content p-3 d-flex flex-column">
+        <div class="d-flex justify-content-between">
+            @if (itemType == "Course")
+            {
+                <span class="badge bg-success badge-custom-1">@(Model.Course.IsOnline ? "Online" : "Offline")</span>
+            }
+            else
+            {
+                <span class="badge badge-custom-1">@Model.Product.Company.Name</span>
+            }
+            <span class="badge bg-warning text-dark badge-custom">@categoryName</span>
+        </div>
+        <h5 class="mt-4">
+            <a asp-action="@detailsAction" asp-controller="Store" asp-route-id="@id" class="text-decoration-none text-dark">@name</a>
+        </h5>
+        <p class="text-muted small">@description.Substring(0, Math.Min(description.Length, 100))...</p>
+
+        @if (itemType == "Course")
+        {
+            <div class="d-flex justify-content-between">
+                <small class="person"><i class="fa-solid fa-user me-2"></i> @Model.Course.InstructorName</small>
+            </div>
+        }
+        else
+        {
+            <div class="d-flex justify-content-between">
+                <small class="text-muted"><i class="fa-solid fa-warehouse me-2"></i> In Stock: @Model.Product.StockQuantity</small>
+            </div>
+        }
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+                @if (salePrice.HasValue)
+                {
+                    <span class="course-price fw-bold">@salePrice.Value.ToString("C")</span>
+                    <span class="text-muted text-decoration-line-through">@price.ToString("C")</span>
+                }
+                else
+                {
+                    <span class="course-price fw-bold">@price.ToString("C")</span>
+                }
+            </div>
+            <a asp-action="@detailsAction" asp-controller="Store" asp-route-id="@id" class="btn btn-success btn-sm">View Details</a>
+        </div>
+        <div class="d-flex justify-content-center align-items-center mt-4">
+            <form asp-action="RemoveFromFavorites" asp-controller="Profile" method="post" class="w-100">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn heart-btn w-100">Remove from wishlist</button>
+            </form>
+        </div>
+    </div>
+</div>
+

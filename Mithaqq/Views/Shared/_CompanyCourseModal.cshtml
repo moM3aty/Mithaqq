@@ -1,0 +1,60 @@
+﻿@model Course
+
+<div class="modal fade" id="companyCourseModal" tabindex="-1" aria-labelledby="courseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="courseModalLabel">Add/Edit Course</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="companyCourseForm" enctype="multipart/form-data">
+                    <input type="hidden" id="courseId" name="Id" value="0" />
+                    <input type="hidden" id="courseCompanyId" name="CompanyId" value="0" />
+
+                    <div class="mb-3">
+                        <label for="courseName" class="form-label">Course Name</label>
+                        <input type="text" class="form-control" id="courseName" name="Name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="courseInstructor" class="form-label">Instructor Name</label>
+                        <input type="text" class="form-control" id="courseInstructor" name="InstructorName" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="courseDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="courseDescription" name="Description" rows="3"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="coursePrice" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="coursePrice" name="Price" required step="0.01">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="courseSalePrice" class="form-label">Sale Price (Optional)</label>
+                            <input type="number" class="form-control" id="courseSalePrice" name="SalePrice" step="0.01">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="courseCategoryId" class="form-label">Category</label>
+                        <select class="form-select" id="courseCategoryId" name="CategoryId" asp-items="@ViewBag.Categories" required>
+                            <option value="">-- Select Category --</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="courseImageFile" class="form-label">Course Image</label>
+                        <input class="form-control" type="file" id="courseImageFile" name="ImageFile" accept="image/*">
+                        <img id="courseImagePreview" src="#" alt="Image Preview" class="mt-2" style="max-height: 150px; display: none;" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveCourseBtn">Save Course</button>
+            </div>
+        </div>
+    </div>
+</div>

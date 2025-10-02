@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Review>
+@{
+    ViewData["Title"] = "My Reviews";
+    ViewData["NavbarSolid"] = true;
+}
+
+<div class="container py-5" style="padding-top: 120px !important;">
+    <h1 class="mb-4">My Reviews</h1>
+    @if (Model.Any())
+    {
+        @foreach (var review in Model)
+        {
+            var itemName = review.Product?.Name ?? review.Course?.Name;
+            var itemUrl = review.ProductId.HasValue ? Url.Action("ProductDetails", "Store", new { id = review.ProductId }) : Url.Action("CourseDetails", "Store", new { id = review.CourseId });
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <a href="@itemUrl" class="text-decoration-none"><h5>@itemName</h5></a>
+                        <small class="text-muted">@review.DatePosted.ToShortDateString()</small>
+                    </div>
+                    <partial name="_StarRatingPartial" model="(double)review.Stars" />
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <p class="lead">You have not written any reviews yet.</p>
+        </div>
+    }
+</div>

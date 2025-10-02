@@ -1,0 +1,53 @@
+﻿@model Product
+
+<div class="card product-card h-100">
+    <div class="position-relative">
+        <a asp-action="ProductDetails" asp-controller="Store" asp-route-id="@Model.Id">
+            <img src="@(Model.ImageUrl ?? "/images/default-placeholder.png")" class="card-img-top" alt="@Model.Name" style="object-fit: cover;">
+        </a>
+        @if (Model.SalePrice.HasValue && Model.DiscountPercentage.HasValue && Model.DiscountPercentage > 0)
+        {
+            <span class="badge text-white bg-danger badge-custom position-absolute top-0 end-0 m-2">@Model.DiscountPercentage% OFF</span>
+        }
+        <span class="badge badge-custom-1 position-absolute top-0 start-0 m-2">@Model.Company.Name</span>
+    </div>
+    <div class="card-body d-flex flex-column">
+        <h5 class="card-title">
+            <a asp-action="ProductDetails" asp-controller="Store" asp-route-id="@Model.Id" class="text-decoration-none text-dark">@Model.Name</a>
+        </h5>
+        <div class="mb-2">
+            <partial name="_StarRatingPartial" model="Model.AverageRating" />
+            <span class="text-muted small ms-1">(@Model.RatingCount)</span>
+        </div>
+        <p class="small text-secondary">@Model.Description.Substring(0, Math.Min(Model.Description.Length, 100))...</p>
+        <div class="mt-auto">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    @if (Model.SalePrice.HasValue)
+                    {
+                        <h5 class="text-success d-inline">@Model.SalePrice.Value.ToString("C")</h5>
+                        <span class="text-muted text-decoration-line-through">@Model.Price.ToString("C")</span>
+                    }
+                    else
+                    {
+                        <h5 class="text-success d-inline">@Model.Price.ToString("C")</h5>
+                    }
+                </div>
+                <form asp-controller="Profile" asp-action="AddToFavorites" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-link text-danger p-0" title="Add to Favorites"><i class="fas fa-heart"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-transparent">
+        <form asp-controller="Store" asp-action="AddToCart" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="productId" value="@Model.Id" />
+            <button type="submit" class="btn btn-success w-100">
+                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+            </button>
+        </form>
+    </div>
+</div>

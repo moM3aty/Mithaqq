@@ -1,0 +1,53 @@
+﻿@model TravelPackage
+
+<div class="modal fade" id="companyTravelPackageModal" tabindex="-1" aria-labelledby="travelPackageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="travelPackageModalLabel">Add/Edit Travel Package</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="companyTravelPackageForm" enctype="multipart/form-data">
+                    <input type="hidden" id="travelPackageId" name="Id" />
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="travelPackageName" class="form-label">Package Name</label>
+                            <input type="text" class="form-control" id="travelPackageName" name="Name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="travelDestination" class="form-label">Destination</label>
+                            <input type="text" class="form-control" id="travelDestination" name="Destination" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="travelDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="travelDescription" name="Description" rows="3"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="travelPrice" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="travelPrice" name="Price" step="0.01" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="travelDuration" class="form-label">Duration (Days)</label>
+                            <input type="number" class="form-control" id="travelDuration" name="DurationDays" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="travelInclusions" class="form-label">Inclusions (comma-separated)</label>
+                            <input type="text" class="form-control" id="travelInclusions" name="Inclusions" placeholder="e.g. Flights, Hotels, Tours">
+                        </div>
+                        <div class="col-12">
+                            <label for="travelImageFile" class="form-label">Package Image</label>
+                            <input type="file" class="form-control" id="travelImageFile" name="ImageFile" accept="image/*">
+                            <img id="travelImagePreview" src="#" alt="Image Preview" class="mt-2" style="display: none; max-height: 100px; border-radius: 8px;" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveTravelPackageBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+

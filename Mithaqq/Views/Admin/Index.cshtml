@@ -1,0 +1,278 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_AdminLayout";
+    var categories = ViewData["Categories"] as List<Category> ?? new List<Category>();
+
+}
+
+<div class="p-4">
+    <!-- SELECTION SCREEN -->
+    <div id="dashboardSelection" class="text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">Admin Dashboard</h1>
+                <p class="lead text-muted mb-5">Select the dashboard you want to manage</p>
+                <div class="row g-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="dashboard-card" onclick="showEcommerceDashboard()">
+                            <div class="dashboard-icon"><i class="fas fa-shopping-cart"></i></div>
+                            <h3>E-commerce Dashboard</h3>
+                            <p>Manage products, orders, sales analytics, and marketer performance</p>
+                            <ul class="list-unstyled d-flex flex-column gap-3">
+                                <li><i class="fas fa-check text-success me-2"></i>Product Management</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Sales Monitoring</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Marketer Management</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Order Processing</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="dashboard-card" onclick="showLMSDashboard()">
+                            <div class="dashboard-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <h3>LMS Dashboard</h3>
+                            <p>Manage courses, lessons, instructors, and learning analytics</p>
+                            <ul class="list-unstyled d-flex flex-column gap-3">
+                                <li><i class="fas fa-check text-success me-2"></i>Course Management</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Content Review</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Student Progress</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Revenue Reports</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- E-COMMERCE DASHBOARD (Hidden by default) -->
+    <div id="ecommerceDashboard" class="d-none">
+        <div class="row g-4 mb-4">
+            <!-- Stat Cards -->
+            <div class="col-md-3 mb-3"><div class="card text-white"><div class="card-body"><div class="d-flex justify-content-between"><div><h6 class="card-title">Total Products</h6><h3 id="totalProductsStat" class="mb-0">0</h3></div><i class="fas fa-box fa-2x opacity-75"></i></div></div></div></div>
+            <div class="col-md-3 mb-3"><div class="card bg-success text-white"><div class="card-body"><div class="d-flex justify-content-between"><div><h6 class="card-title">Total Orders</h6><h3 id="totalOrdersStat" class="mb-0">0</h3></div><i class="fas fa-shopping-bag fa-2x opacity-75"></i></div></div></div></div>
+            <div class="col-md-3 mb-3"><div class="card bg-warning text-white"><div class="card-body"><div class="d-flex justify-content-between"><div><h6 class="card-title">Active Marketers</h6><h3 id="totalMarketersStat" class="mb-0">0</h3></div><i class="fas fa-users fa-2x opacity-75"></i></div></div></div></div>
+            <div class="col-md-3 mb-3"><div class="card bg-info text-white"><div class="card-body"><div class="d-flex justify-content-between"><div><h6 class="card-title">Monthly Revenue</h6><h3 id="monthlyRevenueStat" class="mb-0">$0.00</h3></div><i class="fas fa-dollar-sign fa-2x opacity-75"></i></div></div></div></div>
+        </div>
+
+        <ul class="nav nav-tabs mb-4" id="ecommerceTab">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#products"><i class="fas fa-box me-2"></i>Products</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#orders"><i class="fas fa-shopping-bag me-2"></i>Orders</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#analytics"><i class="fas fa-chart-line me-2"></i>Analytics</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#reviews"><i class="fas fa-star me-2"></i>Reviews</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#users"><i class="fas fa-users-cog me-2"></i>Users & Roles</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#categories"><i class="fas fa-tags me-2"></i>Categories</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#shipping-zones"><i class="fas fa-shipping-fast me-2"></i>Shipping Zones</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Products Tab -->
+            <div class="tab-pane fade show active" id="products">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>Product Management</h4>
+                    <button class="btn btn-accent" id="addProductBtn"><i class="fas fa-plus me-2"></i>Add Product</button>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="productSearchInput" placeholder="Search for products...">
+                    </div>
+                    <div class="col-md-4">
+                        <select id="productCategoryFilter" class="form-select">
+                            <option value="">All Categories</option>
+                            @foreach (var category in categories)
+                            {
+                                <option value="@category.Id">@category.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Product</th><th>Company</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead><tbody id="productsTable"></tbody></table></div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div class="tab-pane fade" id="orders">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0">Order Management</h4>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary active" onclick="filterOrders('all', this)">All Orders</button>
+                        <button type="button" class="btn btn-sm btn-outline-warning" onclick="filterOrders('Pending Approval', this)">Pending Approval</button>
+                    </div>
+                </div>
+                <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Order ID</th><th>Customer</th><th>Date</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody id="ordersTable"></tbody></table></div>
+            </div>
+
+            <!-- Analytics Tab Pane -->
+            <div class="tab-pane fade" id="analytics">
+                <h4 class="mb-4">Sales Analytics</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card analysis-card">
+                            <div class="card-header">
+                                <h6>Monthly Sales Trend</h6>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="salesChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card analysis-card">
+                            <div class="card-header">
+                                <h6>Top Products by Category</h6>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="productsChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card analysis-card">
+                            <div class="card-header"><h6><i class="fas fa-trophy me-2"></i>Top 5 Selling Products</h6></div>
+                            <div class="card-body"><ul class="list-group list-group-flush" id="topProductsList"></ul></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card analysis-card">
+                            <div class="card-header"><h6><i class="fas fa-award me-2"></i>Top 5 Selling Courses</h6></div>
+                            <div class="card-body"><ul class="list-group list-group-flush" id="topCoursesList"></ul></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div class="tab-pane fade" id="reviews">
+                <h4 class="mb-3">Review Management</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Type</th>
+                                <th>User</th>
+                                <th>Rating</th>
+                                <th>Comment</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reviewsTable">
+                            <!-- Review rows will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users & Roles Tab -->
+            <div class="tab-pane fade" id="users">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>User & Role Management</h4>
+                    <button class="btn btn-accent" id="addUserBtn"><i class="fas fa-user-plus me-2"></i>Add User</button>
+                </div>
+                <div class="table-responsive"><table class="table table-striped"><thead><tr><th>User</th><th>Email</th><th>Roles</th><th>Actions</th></tr></thead><tbody id="usersTable"></tbody></table></div>
+            </div>
+
+            <!-- Categories Tab -->
+            <div class="tab-pane fade" id="categories">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>Category Management</h4>
+                    <button class="btn btn-accent" id="addCategoryBtn"><i class="fas fa-plus me-2"></i>Add Category</button>
+                </div>
+                <div class="table-responsive"><table class="table table-striped"><thead><tr><th>ID</th><th>Name</th><th>Actions</th></tr></thead><tbody id="categoriesTable"></tbody></table></div>
+            </div>
+
+            <!-- Shipping Zones Tab -->
+            <div class="tab-pane fade" id="shipping-zones">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>Shipping Zone Management</h4>
+                    <button class="btn btn-accent" id="addShippingZoneBtn"><i class="fas fa-plus me-2"></i>Add Zone</button>
+                </div>
+                <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Zone Name</th><th>City</th><th>Cost</th><th>Actions</th></tr></thead><tbody id="shippingZonesTable"></tbody></table></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LMS DASHBOARD (Hidden by default) -->
+    <div id="lmsDashboard" class="d-none">
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3"><div class="card bg-success text-white"><div class="card-body"><div class="d-flex justify-content-between"><div><h6 class="card-title">Total Courses</h6><h3 id="totalCoursesStat" class="mb-0">0</h3></div><i class="fas fa-book fa-2x opacity-75"></i></div></div></div></div>
+            <div class="col-md-3 mb-3"><div class="card bg-primary text-white"><div class="card-body"><div class="d-flex justify-content-between"><div><h6 class="card-title">Active Students</h6><h3 id="totalStudentsStat" class="mb-0">0</h3></div><i class="fas fa-user-graduate fa-2x opacity-75"></i></div></div></div></div>
+            <div class="col-md-3 mb-3"><div class="card bg-warning text-white"><div class="card-body"><div class="d-flex justify-content-between"><div><h6 class="card-title">Instructors</h6><h3 class="mb-0">34</h3></div><i class="fas fa-chalkboard-teacher fa-2x opacity-75"></i></div></div></div></div>
+            <div class="col-md-3 mb-3"><div class="card bg-info text-white"><div class="card-body"><div class="d-flex justify-content-between"><div><h6 class="card-title">Course Revenue</h6><h3 class="mb-0">$32,890</h3></div><i class="fas fa-dollar-sign fa-2x opacity-75"></i></div></div></div></div>
+        </div>
+
+        <ul class="nav nav-tabs mb-4" id="lmsTab">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#courses"><i class="fas fa-book me-2"></i>Courses</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#lms-analytics"><i class="fas fa-chart-bar me-2"></i>Analytics</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#travel-packages"><i class="fas fa-plane-departure me-2"></i>Travel Packages</a></li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#blog-posts"><i class="fas fa-blog me-2"></i>Blog Posts</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="courses">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>Course Management</h4>
+                    <button class="btn btn-accent" id="addCourseBtn"><i class="fas fa-plus me-2"></i>Add Course</button>
+                </div>
+                <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Course</th><th>Company</th><th>Category</th><th>Price</th><th>Instructor</th><th>Actions</th></tr></thead><tbody id="coursesTable"></tbody></table></div>
+            </div>
+            <div class="tab-pane fade" id="lms-analytics">
+                <h4 class="mb-3">Learning Analytics</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card analysis-card">
+                            <div class="card-header">
+                                <h6>Course Enrollments</h6>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="enrollmentsChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card analysis-card">
+                            <div class="card-header">
+                                <h6>Completion Rates</h6>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="completionChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="travel-packages">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>Travel Package Management</h4>
+                    <button class="btn btn-accent" id="addTravelPackageBtn"><i class="fas fa-plus me-2"></i>Add Package</button>
+                </div>
+                <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Package Name</th><th>Destination</th><th>Price</th><th>Duration (Days)</th><th>Actions</th></tr></thead><tbody id="travelPackagesTable"></tbody></table></div>
+            </div>
+            <div class="tab-pane fade" id="blog-posts">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>Blog Post Management</h4>
+                    <button class="btn btn-accent" id="addBlogPostBtn"><i class="fas fa-plus me-2"></i>Add Post</button>
+                </div>
+                <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Title</th><th>Author</th><th>Date</th><th>Actions</th></tr></thead><tbody id="blogPostsTable"></tbody></table></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modals -->
+    <partial name="_ProductModal" />
+    <partial name="_CourseModal" />
+    <partial name="_ShippingZoneModal" />
+    <partial name="_CategoryModal" />
+    <partial name="_TravelPackageModal" />
+    <partial name="_BlogModal" />
+    <partial name="_UserModal" />
+    <partial name="_OrderDetailModal" />
+
+@section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="~/js/admin-dashboard.js" asp-append-version="true"></script>
+}
+
+

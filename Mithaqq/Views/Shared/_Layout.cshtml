@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Mithaqq</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/article.css">
+</head>
+<body class="@ViewData["BodyClass"]">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top @(ViewData["NavbarSolid"] as bool? == true ? "navbar-dark-bg" : "")">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" asp-controller="Home" asp-action="Index"><i class="fas fa-building me-2"></i>Mithaqq</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse mt-3 mt-lg-0" id="mainNav">
+                <ul class="navbar-nav d-flex gap-4 justify-content-center align-items-center ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item position-relative"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#values">Goals</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#companies">Companies</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Store" asp-action="Index">Store</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#blog">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#contact">Contact</a></li>
+                </ul>
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </nav>
+
+    <div>
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    <button id="backToTop" class="floating-btn top-btn" title="Back to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <footer class="footer pt-5">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="mb-3 d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-building fs-1"></i>
+                        <h5 class="fw-bold m-0 text-white">Mithaqq</h5>
+                    </div>
+                    <p class="small text-white">
+                        Leading the future through specialized business solutions in training,
+                        e-marketing, technical innovation, and travel services since 2016.
+                    </p>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-3"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-3"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-3"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm rounded-3"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-white fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled small quick-links">
+                        <li class="mb-2"><a asp-controller="Home" asp-action="Index" asp-fragment="home" class="text-light text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a asp-controller="Home" asp-action="Index" asp-fragment="about" class="text-light text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a asp-controller="Home" asp-action="Index" asp-fragment="values" class="text-light text-decoration-none">Our Goals</a></li>
+                        <li class="mb-2"><a asp-controller="Home" asp-action="Index" asp-fragment="companies" class="text-light text-decoration-none">Companies</a></li>
+                        <li class="mb-2"><a asp-controller="Home" asp-action="Index" asp-fragment="blog" class="text-light text-decoration-none">Blog & News</a></li>
+                        <li class="mb-2"><a asp-controller="Store" asp-action="Index" class="text-light text-decoration-none">Store</a></li>
+                        <li><a asp-controller="Home" asp-action="Index" asp-fragment="contact" class="text-light text-decoration-none">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-white fw-bold mb-3">Our Companies</h6>
+                    <ul class="list-unstyled small quick-links">
+                        <li class="mb-3 text-white">
+                            <i class="fa-solid fa-graduation-cap me-2"></i>
+                            <strong><a asp-controller="Home" asp-action="Global" class="text-white text-decoration-none">Mithaqq Global For Training</a></strong>
+                        </li>
+                        <li class="mb-3 text-white">
+                            <i class="fa-solid fa-bullhorn me-2"></i>
+                            <strong><a asp-controller="Home" asp-action="Nile" class="text-white text-decoration-none">Mithaqq Nile Electronic Marketing</a></strong>
+                        </li>
+                        <li class="mb-3 text-white">
+                            <i class="fa-solid fa-gear me-2"></i>
+                            <strong><a asp-controller="Home" asp-action="Innovation" class="text-white text-decoration-none">Mithaqq Technical Solutions</a></strong>
+                        </li>
+                        <li class="text-white">
+                            <i class="fa-solid fa-plane me-2"></i>
+                            <strong><a asp-controller="Home" asp-action="EasyWay" class="text-white text-decoration-none">Mithaqq Easy Way for Travel</a></strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="fw-bold mb-3 text-white">Our Contact</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2 text-white"><i class="fa-solid fa-phone me-2"></i> +20 127 683 2619</li>
+                        <li class="mb-2 text-white"><i class="fa-solid fa-envelope me-2"></i> info@mithaqq.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom mt-4">
+            <div class="container p-5 border-top border-secondary d-flex flex-column flex-md-row justify-content-between align-items-center small text-secondary">
+                <p class="mb-2 mb-md-0 text-white">© 2025 Mithaqq Business Development Holding Company. All rights reserved.</p>
+                <p class="mb-0 text-white">Made By <a aria-label="gwt facebook" href="https://www.facebook.com/profile.php?id=100090592885243&mibextid=ZbWKwL" class="gmt">GMT Company</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container for Notifications -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <i class="fas fa-check-circle text-success me-2"></i>
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Item added to cart successfully!
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

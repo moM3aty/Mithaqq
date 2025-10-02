@@ -1,0 +1,180 @@
+﻿@model Mithaqq.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Company Dashboard";
+    Layout = "_CompanyAdminLayout";
+    bool isEasyWayAdmin = (bool)(ViewData["IsEasyWayAdmin"] ?? false);
+}
+
+<div id="companyDashboard">
+    <div class="main-header">
+        <h1>Company Dashboard</h1>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <!-- Stat Cards -->
+        <div class="col-md-4">
+            <div class="stat-card" style="background-color: #6366f1;">
+                <h6>Total Products</h6>
+                <h3 id="companyTotalProducts">0</h3>
+                <div class="icon"><i class="fas fa-box-open"></i></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card" style="background-color: #10b981;">
+                <h6>Total Courses</h6>
+                <h3 id="companyTotalCourses">0</h3>
+                <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card" style="background-color: #f59e0b;">
+                <h6>Total Orders</h6>
+                <h3 id="companyTotalOrders">0</h3>
+                <div class="icon"><i class="fas fa-receipt"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4" id="companyTab">
+        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#companyProducts"><i class="fas fa-box me-2"></i>Products</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#companyCourses"><i class="fas fa-graduation-cap me-2"></i>Courses</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#companyCategories"><i class="fas fa-tags me-2"></i>Categories</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#companyShipping"><i class="fas fa-shipping-fast me-2"></i>Shipping Zones</a></li>
+        @if (isEasyWayAdmin)
+        {
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#companyTravel"><i class="fas fa-plane-departure me-2"></i>Travel Packages</a></li>
+        }
+    </ul>
+
+    <div class="tab-content">
+        <!-- Products Tab -->
+        <div class="tab-pane fade show active" id="companyProducts">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h4>My Products</h4>
+                    <div class="d-flex ms-auto align-items-center">
+                        <input type="text" id="productSearchInput" class="form-control me-2" placeholder="Search Products...">
+                        <button class="btn btn-primary" id="addCompanyProductBtn"><i class="fas fa-plus me-2"></i>Add</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="companyProductsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Tab -->
+        <div class="tab-pane fade" id="companyCourses">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h4>My Courses</h4>
+                    <div class="d-flex ms-auto align-items-center">
+                        <input type="text" id="courseSearchInput" class="form-control me-2" placeholder="Search Courses...">
+                        <button class="btn btn-primary" id="addCompanyCourseBtn"><i class="fas fa-plus me-2"></i>Add</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Instructor</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="companyCoursesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories Tab -->
+        <div class="tab-pane fade" id="companyCategories">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h4>Manage Categories</h4>
+                    <div class="d-flex ms-auto align-items-center">
+                        <input type="text" id="categorySearchInput" class="form-control me-2" placeholder="Search Categories...">
+                        <button class="btn btn-primary" id="addCategoryBtn"><i class="fas fa-plus me-2"></i>Add</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead><tr><th>ID</th><th>Name</th></tr></thead>
+                        <tbody id="companyCategoriesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipping Tab -->
+        <div class="tab-pane fade" id="companyShipping">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h4>Manage Shipping Zones</h4>
+                    <div class="d-flex ms-auto align-items-center">
+                        <input type="text" id="shippingSearchInput" class="form-control me-2" placeholder="Search Zones...">
+                        <button class="btn btn-primary" id="addShippingZoneBtn"><i class="fas fa-plus me-2"></i>Add</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead><tr><th>Zone Name</th><th>City</th><th>Cost</th></tr></thead>
+                        <tbody id="companyShippingZonesTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel Tab (Conditional) -->
+        @if (isEasyWayAdmin)
+        {
+            <div class="tab-pane fade" id="companyTravel">
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h4>Manage Travel Packages</h4>
+                        <div class="d-flex ms-auto align-items-center">
+                            <input type="text" id="travelSearchInput" class="form-control me-2" placeholder="Search Packages...">
+                            <button class="btn btn-primary" id="addTravelPackageBtn"><i class="fas fa-plus me-2"></i>Add</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead><tr><th>Package Name</th><th>Destination</th><th>Price</th><th>Duration (Days)</th><th>Actions</th></tr></thead>
+                            <tbody id="companyTravelPackagesTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Modals -->
+<partial name="_CompanyProductModal" model="new Product()" />
+<partial name="_CompanyCourseModal" model="new Course()" />
+<partial name="_CompanyCategoryModal" model="new Category()" />
+<partial name="_CompanyShippingZoneModal" model="new ShippingZone()" />
+@if (isEasyWayAdmin)
+{
+    <partial name="_CompanyTravelPackageModal" model="new TravelPackage()" />
+}
+
+
+@section Scripts {
+    <script src="~/js/company-admin.js" asp-append-version="true"></script>
+}
+

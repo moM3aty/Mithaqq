@@ -1,0 +1,172 @@
+﻿@model CourseContentViewModel
+@{
+    ViewData["Title"] = Model.CourseName;
+}
+<style>
+    #video-player-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* New style for the black screen overlay */
+    .blackout-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        color: #fff;
+        display: none; /* Hidden by default */
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+        text-align: center;
+        font-size: 1.5rem;
+        flex-direction: column;
+    }
+
+        .blackout-overlay i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #dc3545;
+        }
+</style>
+
+<section class="lessons" style="padding-top: 90px;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 sidebar p-4">
+                <a asp-action="Index" asp-controller="Store" class="back-button d-flex align-items-center gap-2 fs-5 my-5"><i class="fas fa-arrow-left"></i> Back To Store</a>
+                <h4 class="text-white mb-5">@Model.CourseName</h4>
+                <div class="progress-container text-white">
+                    <div class="d-flex justify-content-between text-blue mb-3 small"><span>Course Progress</span><span id="progress-percent">0%</span></div>
+                    <div class="progress"><div class="progress-bar" role="progressbar" style="width: 0%;" id="progress-bar"></div></div>
+                </div>
+                <div id="lessons-list" class="mt-5">
+                    @foreach (var (lesson, index) in Model.Lessons.Select((value, i) => (value, i)))
+                    {
+                        <div class="lesson-item @(index == 0 ? "active" : "")" onclick="showLesson(@index)">@lesson.Title</div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-9 p-4">
+                <div class="img w-100 rounded-1 overflow-hidden mb-3">
+                    <div id="video-player-container" class="bg-dark d-flex justify-content-center align-items-center" style="height: 500px; border-radius: 10px;">
+                        <video id="lesson-video" style="width:100%; height:100%;" controls autoplay playsinline></video>
+                        <!-- Blackout overlay for screen recording protection -->
+                        <div id="blackout-overlay" class="blackout-overlay">
+                            <i class="fas fa-eye-slash"></i>
+                            <p>Recording is not permitted.</p>
+                            <small>Please return to this tab to continue viewing.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls d-flex justify-content-between py-4">
+                    <button id="prev-btn" class="btn back-button text-white" onclick="prevLesson()">Prev</button>
+                    <button id="next-btn" class="btn back-button text-white" onclick="nextLesson()">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        const lessons = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Lessons));
+        let currentLessonIndex = 0;
+        let completedLessons = new Set();
+        let videoPlayer = document.getElementById('lesson-video');
+        const blackoutOverlay = document.getElementById('blackout-overlay');
+        let hls;
+
+        const onVideoEnded = function() {
+            completedLessons.add(currentLessonIndex);
+            updateProgressBar();
+            if(currentLessonIndex < lessons.length - 1) {
+                nextLesson();
+            }
+        };
+        videoPlayer.addEventListener('ended', onVideoEnded);
+
+
+        function showLesson(index) {
+            if (index < 0 || index >= lessons.length) return;
+            currentLessonIndex = index;
+            const lesson = lessons[index];
+            const secureVideoUrl = lesson.secureVideoUrl;
+
+            const playerContainer = document.getElementById('video-player-container');
+
+            if (!secureVideoUrl) {
+                console.error("Invalid lesson or video URL for index:", index);
+                playerContainer.innerHTML = `<div class="text-white p-5 text-center">Could not load video for this lesson.<br>Please ensure a valid Bunny.net Video ID, Library ID, and that your Pull Zone URL is correct in appsettings.</div>`;
+                return;
+            }
+
+            if (!document.getElementById('lesson-video')) {
+                // Restore video player if it was replaced with an error message
+                const videoHTML = `<video id="lesson-video" style="width:100%; height:100%;" controls autoplay playsinline></video>
+                                   <div id="blackout-overlay" class="blackout-overlay">
+                                       <i class="fas fa-eye-slash"></i>
+                                       <p>Recording is not permitted.</p>
+                                       <small>Please return to this tab to continue viewing.</small>
+                                   </div>`;
+                playerContainer.innerHTML = videoHTML;
+                videoPlayer = document.getElementById('lesson-video');
+                videoPlayer.addEventListener('ended', onVideoEnded);
+            }
+
+            if (Hls.isSupported() && secureVideoUrl.includes('.m3u8')) {
+                if (hls) { hls.destroy(); }
+                hls = new Hls();
+                hls.loadSource(secureVideoUrl);
+                hls.attachMedia(videoPlayer);
+            } else {
+                if (hls) { hls.destroy(); }
+                videoPlayer.src = secureVideoUrl;
+            }
+            videoPlayer.play().catch(e => console.error("Autoplay was prevented:", e));
+            updateUI();
+        }
+
+        function updateUI() {
+            document.querySelectorAll('.lesson-item').forEach((el, i) => el.classList.toggle('active', i === currentLessonIndex));
+            document.getElementById("prev-btn").disabled = currentLessonIndex === 0;
+            document.getElementById("next-btn").disabled = currentLessonIndex === lessons.length - 1;
+        }
+
+        function nextLesson() { showLesson(currentLessonIndex + 1); }
+        function prevLesson() { showLesson(currentLessonIndex - 1); }
+
+        function updateProgressBar() {
+            const percent = lessons.length > 0 ? Math.floor((completedLessons.size / lessons.length) * 100) : 0;
+            document.getElementById("progress-bar").style.width = percent + "%";
+            document.getElementById("progress-percent").innerText = percent + "%";
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+             if(lessons && lessons.length > 0) {
+                 showLesson(0);
+             } else {
+                 document.getElementById('video-player-container').innerHTML = `<div class="text-white p-5 text-center">This course has no lessons yet.</div>`;
+                 document.querySelector('.controls').style.display = 'none';
+             }
+        });
+
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                videoPlayer.pause();
+                blackoutOverlay.style.display = 'flex';
+            } else {
+                blackoutOverlay.style.display = 'none';
+                videoPlayer.play().catch(e => console.error("Playback failed:", e));
+            }
+        });
+    </script>
+}
+

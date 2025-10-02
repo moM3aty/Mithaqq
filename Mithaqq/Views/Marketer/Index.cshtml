@@ -1,0 +1,101 @@
+﻿@model MarketerDashboardViewModel
+@{
+    ViewData["Title"] = "Marketer Dashboard";
+    Layout = "_MarketerLayout";
+}
+
+<div class="main-header">
+    <h1>Dashboard</h1>
+    <span class="text-muted">Welcome back, @Model.MarketerName!</span>
+</div>
+
+<!-- Stat Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card" style="background-color: #6366f1;">
+            <h6>Total Referrals</h6>
+            <h3>@Model.TotalReferredUsers</h3>
+            <div class="icon"><i class="fas fa-users"></i></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="background-color: #10b981;">
+            <h6>Total Sales</h6>
+            <h3>@Model.TotalSalesFromReferrals.ToString("C")</h3>
+            <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="background-color: #f59e0b;">
+            <h6>Commission Earned</h6>
+            <h3>@Model.TotalCommissionEarned.ToString("C")</h3>
+            <div class="icon"><i class="fas fa-wallet"></i></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100">
+            <div class="card-body text-center d-flex flex-column justify-content-center">
+                <h6 class="card-title text-muted">Your Referral Code</h6>
+                <p class="fs-5 p-2 bg-light text-dark rounded user-select-all" style="font-family: monospace;"><strong>@Model.ReferralCode</strong></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activities -->
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="content-card">
+            <div class="content-card-header">
+                <h4>Recent Referrals</h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model.RecentReferredUsers)
+                        {
+                            <tr>
+                                <td>@user.FirstName @user.LastName</td>
+                                <td>@user.Email</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="content-card">
+            <div class="content-card-header">
+                <h4>Recent Commissions</h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Sale Amount</th>
+                            <th>Commission</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var commission in Model.RecentCommissions)
+                        {
+                            <tr>
+                                <td>@commission.CustomerName</td>
+                                <td>@commission.SaleAmount.ToString("C")</td>
+                                <td class="text-success fw-bold">@commission.CommissionEarned.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

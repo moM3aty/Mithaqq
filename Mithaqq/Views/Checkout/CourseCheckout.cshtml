@@ -1,0 +1,142 @@
+﻿@model CourseCheckoutViewModel
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Enroll in Course";
+}
+
+<div class="container py-5" style="padding-top: 120px !important;">
+    <h1 class="mb-4">Enroll in: @Model.Course.Name</h1>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Your Information</h4>
+                    <form id="info-form">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="form-label"></label>
+                                <input asp-for="FirstName" class="form-control" readonly />
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label"></label>
+                                <input asp-for="LastName" class="form-control" readonly />
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="Email" class="form-label"></label>
+                                <input asp-for="Email" class="form-control" readonly />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Payment Method</h4>
+                    <p class="text-muted">After payment, your enrollment will be pending approval by the administrator.</p>
+                    <div class="d-flex flex-column gap-3">
+                        <div id="paypal-button-container"></div>
+                        <button id="stripe-checkout-button" class="btn btn-primary w-100"><i class="fab fa-stripe me-2"></i>Pay with Card (Stripe)</button>
+                    </div>
+                    <div id="payment-message" class="alert mt-3" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Order Summary</h4>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Course: <strong>@Model.Course.Name</strong></span>
+                    </div>
+                    <img src="@(Model.Course.ImageUrl ?? "/images/default-placeholder.png")" class="w-100 rounded my-3" alt="@Model.Course.Name">
+                    <hr />
+                    <div class="d-flex justify-content-between fs-5 fw-bold">
+                        <span>Total</span>
+                        <span>@((Model.Course.SalePrice ?? Model.Course.Price).ToString("C"))</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=@Model.PayPalClientId&currency=USD"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const courseId = @Model.Course.Id;
+            const paymentMessage = document.getElementById('payment-message');
+
+            function showMessage(message, isError = true) {
+                paymentMessage.textContent = message;
+                paymentMessage.className = isError ? 'alert alert-danger mt-3' : 'alert alert-info mt-3';
+                paymentMessage.style.display = 'block';
+            }
+
+            // Stripe Integration
+            const stripe = Stripe('@Configuration["Stripe:PublishableKey"]');
+            const stripeButton = document.getElementById('stripe-checkout-button');
+            if(stripeButton) {
+                stripeButton.addEventListener('click', function() {
+                    fetch('/api/checkout/create-stripe-session', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ courseId: courseId })
+                    })
+                    .then(response => {
+                        if (!response.ok) return response.json().then(err => Promise.reject(err));
+                        return response.json();
+                    })
+                    .then(session => stripe.redirectToCheckout({ sessionId: session.sessionId }))
+                    .catch(error => {
+                        console.error('Stripe Error:', error);
+                        showMessage(error.error?.message || 'Could not connect to Stripe. Please check API keys.');
+                    });
+                });
+            }
+
+            // PayPal Integration
+             if (typeof paypal !== 'undefined' && '@Model.PayPalClientId' && '@Model.PayPalClientId' !== 'YOUR_PAYPAL_CLIENT_ID') {
+                paypal.Buttons({
+                    createOrder: () => {
+                        return fetch('/api/checkout/create-paypal-order', {
+                            method: 'post',
+                            headers: { 'Content-Type': 'application/json' },
+                             body: JSON.stringify({ courseId: courseId })
+                        }).then(res => {
+                            if (!res.ok) return res.json().then(err => Promise.reject(err));
+                            return res.json();
+                        }).then(orderData => orderData.id)
+                        .catch(error => {
+                             showMessage(error.error?.message || 'Could not create PayPal order.');
+                        });
+                    },
+                    onApprove: (data) => {
+                         return fetch('/api/checkout/capture-paypal-order', {
+                            method: 'post',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ orderId: data.orderID, courseId: courseId })
+                        }).then(res => res.json()).then(orderData => {
+                            if (orderData.success) {
+                                window.location.href = '/Checkout/Success';
+                            } else {
+                                throw new Error(orderData.message || 'Payment capture failed.');
+                            }
+                        });
+                    },
+                    onError: (err) => {
+                        showMessage('An error occurred during the PayPal transaction.');
+                        console.error('PayPal Error:', err);
+                    }
+                }).render('#paypal-button-container');
+            } else {
+                 console.warn("PayPal SDK not loaded. Is the Client ID in appsettings.json correct or missing?");
+                 if(document.getElementById('paypal-button-container')) {
+                    document.getElementById('paypal-button-container').innerHTML = '<p class="text-center text-muted small">PayPal is currently unavailable.</p>';
+                 }
+            }
+        });
+    </script>
+}
+
