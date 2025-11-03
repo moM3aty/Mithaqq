@@ -45,26 +45,26 @@ namespace Mithaqq.Data
                 var globalCompanyId = (await context.Companies.FirstOrDefaultAsync(c => c.Name == "Mithaqq Global"))?.Id;
 
                 var adminUser = new ApplicationUser { UserName = "admin@mithaqq.com", Email = "admin@mithaqq.com", FirstName = "Super", LastName = "Admin", EmailConfirmed = true, UserType = "Admin" };
-                await userManager.CreateAsync(adminUser, "Admin@123");
+                await userManager.CreateAsync(adminUser, "yourPassword");
                 await userManager.AddToRoleAsync(adminUser, "Admin");
 
                 if (globalCompanyId.HasValue)
                 {
                     var companyAdminUser = new ApplicationUser { UserName = "companyadmin@mithaqq.com", Email = "companyadmin@mithaqq.com", FirstName = "Company", LastName = "Admin", EmailConfirmed = true, UserType = "CompanyAdmin", CompanyId = globalCompanyId.Value };
-                    await userManager.CreateAsync(companyAdminUser, "Admin@123");
+                    await userManager.CreateAsync(companyAdminUser, "yourPassword");
                     await userManager.AddToRoleAsync(companyAdminUser, "CompanyAdmin");
                 }
 
                 var marketerUser = new ApplicationUser { UserName = "marketer@mithaqq.com", Email = "marketer@mithaqq.com", FirstName = "Active", LastName = "Marketer", EmailConfirmed = true, UserType = "Marketer", ReferralCode = "MARKET123" };
-                await userManager.CreateAsync(marketerUser, "Admin@123");
+                await userManager.CreateAsync(marketerUser, "yourPassword");
                 await userManager.AddToRoleAsync(marketerUser, "Marketer");
 
                 var regularUser = new ApplicationUser { UserName = "user@mithaqq.com", Email = "user@mithaqq.com", FirstName = "Normal", LastName = "User", EmailConfirmed = true, UserType = "Normal" };
-                await userManager.CreateAsync(regularUser, "Admin@123");
+                await userManager.CreateAsync(regularUser, "yourPassword");
                 await userManager.AddToRoleAsync(regularUser, "User");
 
                 var mohamedUser = new ApplicationUser { UserName = "mo.m3aty@yahoo.com", Email = "mo.m3aty@yahoo.com", FirstName = "Mohamed", LastName = "Aboelmaaty", EmailConfirmed = true, UserType = "User" };
-                await userManager.CreateAsync(mohamedUser, "Admin@123");
+                await userManager.CreateAsync(mohamedUser, "yourPassword");
                 await userManager.AddToRoleAsync(mohamedUser, "User");
             }
 
